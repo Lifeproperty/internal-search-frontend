@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {startTransition, useState} from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -33,7 +33,9 @@ export const SignInForm = () => {
                 const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
                 const idToken = await userCredential.user.getIdToken();
                 localStorage.setItem("accessToken", idToken);
-                router.push("/");
+                startTransition(() => {
+                    router.push("/");
+                });
             } catch (err) {
                 setError("email", {message: ""});
                 setError("password", {message: ""});
