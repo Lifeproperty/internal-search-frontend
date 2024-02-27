@@ -20,7 +20,12 @@ type FormValues = {
 }
 export const SignInForm = () => {
     const router = useRouter();
-    const {register, handleSubmit, setError, formState: {errors,}, trigger} = useForm<FormValues>();
+    const {register, handleSubmit, setError, formState: {errors,}, trigger} = useForm<FormValues>({
+        defaultValues: {
+            email: "test@test.com",
+            password: "123456"
+        }
+    });
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>();
 
@@ -31,7 +36,8 @@ export const SignInForm = () => {
                 setErrorMessage("");
                 setLoading(true);
                 const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
-                console.log(userCredential)
+                const idToken = await userCredential.user.getIdToken();
+                localStorage.setItem("accessToken", idToken);
                 router.push("/");
             } catch (err) {
                 setError("email", {message: ""});

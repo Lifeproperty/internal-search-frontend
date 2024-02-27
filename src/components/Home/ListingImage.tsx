@@ -15,12 +15,15 @@ export const ListingImage = ({sku}: ListingImageProps) => {
         <>
             {image ? (
                 <Image src={`https://drive.google.com/thumbnail?id=${image.id}`}
+                       priority
                        width={160}
                        height={80} alt={"test"}/>
-            ) : <div className={"flex flex-row gap-1 items-center h-[100px]"}>
-                <ImageIcon/>
-                No Image
-            </div>}
+            ) : (
+                <div className={"flex flex-row gap-1 items-center h-[100px]"}>
+                    <ImageIcon/>
+                    No Image
+                </div>
+            )}
         </>
     );
 };

@@ -16,11 +16,10 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (user) => {
             if (!user) {
+                dispatch(setAuth(false));
                 startTransition(() => {
                     router.replace("/login");
                 });
-                console.log("No user is signed in");
-                dispatch(setAuth(false));
             } else {
                 const token = await user.getIdToken();
                 localStorage.setItem("accessToken", token);
@@ -46,7 +45,6 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
                     Loading...
                 </Typography>
             </Box>
-
         );
     }
 

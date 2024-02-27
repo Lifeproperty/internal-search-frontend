@@ -1,11 +1,8 @@
 "use client";
 import {Property} from "@/types/listing";
-import {Box, Button} from "@mui/material";
-import {DataGrid, GridColDef, GridValueGetterParams} from "@mui/x-data-grid";
-import Image from "next/image";
-import ImageIcon from "@mui/icons-material/Image";
+import {Box} from "@mui/material";
+import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import {ListingImage} from "@/components/Home/ListingImage";
-import {GoogleLogin, useGoogleLogin, useGoogleOAuth, googleLogout,} from "@react-oauth/google";
 
 interface ListingTableProps {
     rows: Property[];

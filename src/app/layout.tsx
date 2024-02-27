@@ -9,7 +9,6 @@ import {AuthProviders} from "@/providers/AuthProviders";
 import {NavBar} from "@/components/NavBar";
 import {ReduxProvider} from "@/providers/ReduxProvider";
 import {QueryProvider} from "@/providers/QueryProvider";
-import {GoogleOAuthProvider} from "@react-oauth/google";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -21,20 +20,18 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
     return (
         <html lang="en">
         <body>
-        <GoogleOAuthProvider clientId="24570050822-mu2nejffs4ljk5h9j0mm02hki1oi9e8c.apps.googleusercontent.com">
-            <QueryProvider>
-                <ReduxProvider>
-                    <AuthProviders>
-                        <AppRouterCacheProvider>
-                            <ThemeProvider theme={theme}>
-                                <NavBar/>
-                                {children}
-                            </ThemeProvider>
-                        </AppRouterCacheProvider>
-                    </AuthProviders>
-                </ReduxProvider>
-            </QueryProvider>
-        </GoogleOAuthProvider>
+        <QueryProvider>
+            <ReduxProvider>
+                <AuthProviders>
+                    <AppRouterCacheProvider>
+                        <ThemeProvider theme={theme}>
+                            <NavBar/>
+                            {children}
+                        </ThemeProvider>
+                    </AppRouterCacheProvider>
+                </AuthProviders>
+            </ReduxProvider>
+        </QueryProvider>
         </body>
         </html>
     );

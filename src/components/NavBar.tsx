@@ -9,17 +9,20 @@ import SearchIcon from "@mui/icons-material/Search";
 import {auth} from "@/config/firebase";
 import {useAppSelector} from "@/hooks/useAppSelector";
 import {selectIsAuth} from "@/store";
+import {usePathname} from "next/navigation";
 
 export const NavBar = () => {
+    const pathname = usePathname();
     const isAuth = useAppSelector(selectIsAuth);
 
     const clickSignOut = async () => {
+        localStorage.removeItem("accessToken");
         await auth.signOut();
     };
 
     return (
         <>
-            {isAuth && <Box sx={{flexGrow: 1}}>
+            {pathname != "/login" && isAuth && <Box sx={{flexGrow: 1}}>
                 <AppBar position="static">
                     <Toolbar className={"justify-between"}>
                         <SearchIcon sx={{mr: 1}}/>
