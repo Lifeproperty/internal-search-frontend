@@ -1,5 +1,5 @@
 import * as React from "react";
-import {startTransition, useEffect, useState, useTransition} from "react";
+import { useEffect, useState, useTransition } from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -113,7 +113,6 @@ export const SignInForm = () => {
                         <Alert severity="error" className={"mt-4"}>
                             <AlertTitle>Error</AlertTitle>
                             {errorMessage}
-
                         </Alert>
                     )}
                     {/*<Grid container>*/}

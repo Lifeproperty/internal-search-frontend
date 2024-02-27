@@ -1,6 +1,6 @@
 "use client";
 import {Property} from "@/types/listing";
-import {Box} from "@mui/material";
+import {Box, Link} from "@mui/material";
 import {DataGrid, GridColDef} from "@mui/x-data-grid";
 import {ListingImage} from "@/components/Home/ListingImage";
 
@@ -41,7 +41,21 @@ export const ListingTable = ({rows}: ListingTableProps) => {
         {field: "unitNumber", headerName: "Unit Number", width: 150},
         {field: "buildingYear", headerName: "Building Year", width: 150},
         {field: "lineId", headerName: "Line ID", width: 150},
-        {field: "tel", headerName: "Tel.", width: 150},
+        {
+            field: "tel",
+            headerName: "Tel.",
+            width: 150,
+            renderCell: (params) => {
+                const tels: string[] = params.value.split(",");
+                return <div className={'flex flex-col gap-1'}>
+                    {tels.map((tel, index) => (
+                        <Link href={`tel:${tel}`} key={index}>
+                            {tel}
+                        </Link>
+                    ))}
+                </div>;
+            },
+        },
         {field: "name", headerName: "Name", width: 150},
         {field: "whatsapp", headerName: "Whatsapp", width: 150},
         {field: "facebookMessenger", headerName: "Facebook Messenger", width: 150},
