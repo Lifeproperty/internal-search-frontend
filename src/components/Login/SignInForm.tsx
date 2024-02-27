@@ -1,5 +1,5 @@
 import * as React from "react";
-import {startTransition, useState} from "react";
+import {startTransition, useEffect, useState, useTransition} from "react";
 import Avatar from "@mui/material/Avatar";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -23,6 +23,7 @@ export const SignInForm = () => {
     const {register, handleSubmit, setError, formState: {errors,}, trigger} = useForm<FormValues>();
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>();
+    const [isPending, startTransition] = useTransition();
 
     const onSubmit: SubmitHandler<FormValues> = async (data) => {
         const isValid = await trigger();
@@ -46,6 +47,10 @@ export const SignInForm = () => {
         }
 
     };
+
+    useEffect(() => {
+
+    }, [isPending]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -95,7 +100,7 @@ export const SignInForm = () => {
                     <LoadingButton
                         type="submit"
                         fullWidth
-                        loading={loading}
+                        loading={loading || isPending}
                         sx={{mt: 3, mb: 2}}
                         loadingPosition="start"
                         variant="contained"
