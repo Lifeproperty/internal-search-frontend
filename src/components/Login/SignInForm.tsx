@@ -20,12 +20,7 @@ type FormValues = {
 }
 export const SignInForm = () => {
     const router = useRouter();
-    const {register, handleSubmit, setError, formState: {errors,}, trigger} = useForm<FormValues>({
-        defaultValues: {
-            email: "test@test.com",
-            password: "123456"
-        }
-    });
+    const {register, handleSubmit, setError, formState: {errors,}, trigger} = useForm<FormValues>();
     const [loading, setLoading] = useState<boolean>(false);
     const [errorMessage, setErrorMessage] = useState<string>();
 
