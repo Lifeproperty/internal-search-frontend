@@ -1,89 +1,90 @@
 "use client";
 import {Property} from "@/types/listing";
-import {Box, Link} from "@mui/material";
-import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import {Link} from "@mui/material";
 import {ListingImage} from "@/components/Home/ListingImage";
+import {MaterialReactTable, MRT_ColumnDef, useMaterialReactTable} from "material-react-table";
+import {useMemo} from "react";
 
 interface ListingTableProps {
     rows: Property[];
+    isLoading?: boolean;
 }
 
-export const ListingTable = ({rows}: ListingTableProps) => {
+export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
 
-
-    const columns: GridColDef<Property>[] = [
-        {
-            field: "images",
-            headerName: "Image",
-            renderCell: (params) => (
-                <ListingImage sku={params.row.sku}/>
-            ),
-            width: 160,
-        },
-        {
-            field: "areaLP", headerName: "Area LP", width: 150,
-            valueFormatter: (params) => params.value
-        },
-        {field: "areaLV", headerName: "Area LV", width: 150},
-        {field: "sku", headerName: "SKU", width: 150},
-        {field: "propertyType", headerName: "Property Type", width: 150},
-        {field: "postType", headerName: "Post Type", width: 150},
-        {field: "postFrom", headerName: "Post From", width: 150},
-        {field: "titleTH", headerName: "Title TH", width: 150},
-        {field: "titleEN", headerName: "Title EN", width: 150},
-        {field: "price", headerName: "Price", width: 150},
-        {field: "areaSize", headerName: "Area Size", width: 150},
-        {field: "floor", headerName: "Floor", width: 150},
-        {field: "bedroom", headerName: "Bedroom", width: 150},
-        {field: "bathroom", headerName: "Bathroom", width: 150},
-        {field: "petAllowed", headerName: "Pet Allowed", width: 150},
-        {field: "facingDirection", headerName: "Facing Direction", width: 150},
-        {field: "unitNumber", headerName: "Unit Number", width: 150},
-        {field: "buildingYear", headerName: "Building Year", width: 150},
-        {field: "lineId", headerName: "Line ID", width: 150},
-        {
-            field: "tel",
-            headerName: "Tel.",
-            width: 150,
-            renderCell: (params) => {
-                const tels: string[] = params.value.split(",");
-                return <div className={'flex flex-col gap-1'}>
-                    {tels.map((tel, index) => (
-                        <Link href={`tel:${tel}`} key={index}>
-                            {tel}
-                        </Link>
-                    ))}
-                </div>;
+    const columns = useMemo<MRT_ColumnDef<Property>[]>(
+        () => [
+            {
+                header: "Image",
+                Cell: ({renderedCellValue, row}) => (
+                    <ListingImage sku={row.original.sku}/>
+                ),
+                size: 120,
             },
+            {accessorKey: "titleEN", header: "Title EN", size: 150, },
+            {accessorKey: "sku", header: "SKU", size: 50},
+            {accessorKey: "areaLP", header: "Area LP", size: 100},
+            // {accessorKey: "areaLV", header: "Area LV", size: 150},
+            {accessorKey: "propertyType", header: "Property Type", size: 150},
+            {accessorKey: "postType", header: "Post Type", size: 150},
+            {accessorKey: "postFrom", header: "Post From", size: 150},
+            // {accessorKey: "titleTH", header: "Title TH", size: 150},
+            {accessorKey: "price", header: "Price", size: 150},
+            {accessorKey: "areaSize", header: "Area Size", size: 150},
+            {accessorKey: "floor", header: "Floor", size: 150},
+            {accessorKey: "bedroom", header: "Bedroom", size: 150},
+            {accessorKey: "bathroom", header: "Bathroom", size: 150},
+            {accessorKey: "petAllowed", header: "Pet Allowed", size: 150},
+            {accessorKey: "facingDirection", header: "Facing Direction", size: 150},
+            {accessorKey: "unitNumber", header: "Unit Number", size: 150},
+            // {accessorKey: "buildingYear", header: "Building Year", size: 150},
+            {accessorKey: "lineId", header: "Line ID", size: 150},
+            {
+                accessorKey: "tel",
+                header: "Tel.",
+                size: 150,
+                Cell: ({renderedCellValue, row}) => {
+                    const tels: string[] = row.original.tel.split(",");
+                    return <div className={"flex flex-col gap-2"}>
+                        {tels.map((tel, index) => (
+                            <Link href={`tel:${tel}`} key={index}>
+                                {tel}
+                            </Link>
+                        ))}
+                    </div>;
+                },
+            },
+            {accessorKey: "name", header: "Name", size: 150},
+            {accessorKey: "whatsapp", header: "Whatsapp", size: 150},
+            {accessorKey: "facebookMessenger", header: "Facebook Messenger", size: 150},
+            {accessorKey: "wechat", header: "Wechat", size: 150},
+            // {accessorKey: "externalDataSource", header: "External Data Source", size: 150},
+            // {accessorKey: "feedbackChecked", header: "Feedback Checked", size: 150},
+            // {accessorKey: "listedOn", header: "Listed On", size: 150},
+            // {accessorKey: "availability", header: "Availability", size: 150},
+            // {accessorKey: "psCode", header: "PS Code", size: 150},
+        ], [],
+    );
+
+    const table = useMaterialReactTable({
+        enableStickyHeader: true,
+        columns,
+        enableColumnPinning: true,
+        state: {
+            isLoading: isLoading
         },
-        {field: "name", headerName: "Name", width: 150},
-        {field: "whatsapp", headerName: "Whatsapp", width: 150},
-        {field: "facebookMessenger", headerName: "Facebook Messenger", width: 150},
-        {field: "wechat", headerName: "Wechat", width: 150},
-        {field: "externalDataSource", headerName: "External Data Source", width: 150},
-        {field: "feedbackChecked", headerName: "Feedback Checked", width: 150},
-        {field: "listedOn", headerName: "Listed On", width: 150},
-        {field: "availability", headerName: "Availability", width: 150},
-        {field: "psCode", headerName: "PS Code", width: 150},
-    ];
+        muiTableContainerProps: {sx: {maxHeight: {xs: '60vh', sm: '100%' }}, },
+        renderDetailPanel: ({row}) => (
+            <div>
+                <div>
+                    Bedroom: {row.original.bedroom}
+                </div>
+            </div>
+        ),
+        data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    });
 
     return (
-        <Box component={"div"} sx={{width: "100%"}}>
-            <DataGrid
-                rowHeight={80}
-                rows={rows}
-                columns={columns}
-                initialState={{
-                    pagination: {
-                        paginationModel: {
-                            pageSize: 10,
-                        },
-                    },
-                }}
-                pageSizeOptions={[10, 25, 100]}
-                disableRowSelectionOnClick
-                getRowId={(row: Property) => row.sku + row.postType}
-            />
-        </Box>
+        <MaterialReactTable table={table}/>
     );
 };

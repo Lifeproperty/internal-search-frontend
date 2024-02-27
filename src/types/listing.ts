@@ -27,8 +27,6 @@ export interface Property {
     listedOn: string;
     availability: string;
     psCode: number;
-    // TODO: images type
-    images: any[]
 }
 
 export interface ListingTable {

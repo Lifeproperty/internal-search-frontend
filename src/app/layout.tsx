@@ -25,8 +25,10 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
                 <AuthProviders>
                     <AppRouterCacheProvider>
                         <ThemeProvider theme={theme}>
-                            <NavBar/>
-                            {children}
+                            <div className={'bg-gray-50 h-screen'}>
+                                <NavBar/>
+                                {children}
+                            </div>
                         </ThemeProvider>
                     </AppRouterCacheProvider>
                 </AuthProviders>
