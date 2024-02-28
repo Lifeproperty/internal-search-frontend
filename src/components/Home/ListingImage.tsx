@@ -1,7 +1,9 @@
 import Image from "next/image";
 import ImageIcon from "@mui/icons-material/Image";
 import useGetImagesFromSku from "@/hooks/useGetImagesFromSku";
-import {Skeleton} from "@mui/material";
+import {Dialog, DialogTitle, Skeleton} from "@mui/material";
+import {useState} from "react";
+import {AllImagesList} from "@/components/Home/AllImagesList";
 
 
 interface ListingImageProps {
@@ -11,6 +13,7 @@ interface ListingImageProps {
 export const ListingImage = ({sku}: ListingImageProps) => {
     const {data, isLoading} = useGetImagesFromSku({sku, limit: 1});
     const image = data?.[0];
+    const [open, setOpen] = useState(false);
 
     if (isLoading) return <Skeleton variant="rectangular"/>;
 
@@ -18,16 +21,22 @@ export const ListingImage = ({sku}: ListingImageProps) => {
         <>
             {image ? (
                 <Image src={`https://drive.google.com/thumbnail?id=${image.id}`}
-                       className={"object-cover"}
+                       className={"object-cover hover:cursor-pointer"}
                        priority
                        fill
-                       alt={"test"}/>
+                       onClick={() => setOpen(true)}
+                       alt={"image"}/>
             ) : (
                 <div className={"flex flex-row gap-1 items-center h-[100px]"}>
                     <ImageIcon/>
                     No Image
                 </div>
             )}
+
+            <Dialog onClose={() => setOpen(false)} open={open} maxWidth={'md'} fullWidth>
+                <DialogTitle>Images</DialogTitle>
+                <AllImagesList sku={sku}/>
+            </Dialog>
         </>
     );
 };

@@ -1,5 +1,6 @@
 import {authAxios} from "@/services/network";
 import {Property} from "@/types/listing";
+import {ImageListType} from "@/types/imageSchema";
 
 const baseListingsUrl = "/api/listings";
 
@@ -10,7 +11,7 @@ export const getAllListings = async () => {
 
 
 export const getImagesFromSku = async (sku: string, limit?: number) => {
-    const response = await authAxios().get(`${baseListingsUrl}/images/${sku}`, {
+    const response = await authAxios().get<ImageListType>(`${baseListingsUrl}/images/${sku}`, {
         params: {
             limit,
         },
