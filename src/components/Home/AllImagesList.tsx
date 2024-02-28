@@ -3,6 +3,7 @@ import {ImageList, ImageListItem, Skeleton} from "@mui/material";
 import Image from "next/image";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useTheme} from "@mui/material/styles";
+import {auth} from "@/config/firebase";
 
 interface AllImagesListProps {
     sku: string;
@@ -11,7 +12,6 @@ interface AllImagesListProps {
 export const AllImagesList = ({sku}: AllImagesListProps) => {
     const theme = useTheme();
     const isSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
-
     const {data: imageList, isLoading} = useGetImagesFromSku({sku});
 
     if (isLoading) return (

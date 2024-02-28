@@ -1,17 +1,19 @@
+import {PostType, PropertyType} from "@/constants/property";
+
 export interface Property {
     areaLP: string;
     areaLV: string;
     sku: string;
-    propertyType: string;
-    postType: string;
+    propertyType: PropertyType;
+    postType: PostType;
     postFrom: string;
     titleTH: string;
     titleEN: string;
     price: number;
     areaSize: number;
     floor: string;
-    bedroom: number;
-    bathroom: number;
+    bedroom: string;
+    bathroom: string;
     petAllowed: string;
     facingDirection: string;
     unitNumber: string;

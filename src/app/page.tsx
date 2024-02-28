@@ -24,6 +24,30 @@ export default function Home() {
             if (condition.areaLPList.length > 0) {
                 isMatch = isMatch && condition.areaLPList.includes(row.areaLP);
             }
+            if (condition.postTypeList.length > 0) {
+                isMatch = isMatch && condition.postTypeList.includes(row.postType);
+            }
+            if (condition.propertyTypeList.length > 0) {
+                isMatch = isMatch && condition.propertyTypeList.includes(row.propertyType);
+            }
+            if (condition.bedRoomList.length > 0) {
+                isMatch = isMatch && condition.bedRoomList.includes(row.bedroom);
+            }
+            if (condition.bathroomList.length > 0) {
+                isMatch = isMatch && condition.bathroomList.includes(row.bathroom);
+            }
+            if (condition.minPrice) {
+                isMatch = isMatch && condition.minPrice <= row.price;
+            }
+            if (condition.maxPrice) {
+                isMatch = isMatch && condition.maxPrice >= row.price;
+            }
+            if (condition.minAreaSize) {
+                isMatch = isMatch && condition.minAreaSize <= row.areaSize;
+            }
+            if (condition.maxAreaSize) {
+                isMatch = isMatch && condition.maxAreaSize >= row.areaSize;
+            }
             return isMatch;
         });
         setTableRows(filteredRows || []);
