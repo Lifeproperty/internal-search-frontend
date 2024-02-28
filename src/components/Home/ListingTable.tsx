@@ -21,7 +21,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 ),
                 size: 120,
             },
-            {accessorKey: "titleEN", header: "Title EN", size: 150, },
+            {accessorKey: "titleEN", header: "Title EN", size: 150,},
             {accessorKey: "sku", header: "SKU", size: 50},
             {accessorKey: "areaLP", header: "Area LP", size: 100},
             // {accessorKey: "areaLV", header: "Area LV", size: 150},
@@ -29,8 +29,19 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             {accessorKey: "postType", header: "Post Type", size: 150},
             {accessorKey: "postFrom", header: "Post From", size: 150},
             // {accessorKey: "titleTH", header: "Title TH", size: 150},
-            {accessorKey: "price", header: "Price", size: 150},
-            {accessorKey: "areaSize", header: "Area Size", size: 150},
+            {
+                accessorKey: "price",
+                header: "Price",
+                size: 150,
+                filterVariant: "range",
+                Cell: ({cell}) => cell.getValue<number>().toLocaleString("en-US")
+            },
+            {
+                accessorKey: "areaSize",
+                header: "Area Size",
+                size: 150,
+                filterVariant: "range"
+            },
             {accessorKey: "floor", header: "Floor", size: 150},
             {accessorKey: "bedroom", header: "Bedroom", size: 150},
             {accessorKey: "bathroom", header: "Bathroom", size: 150},
@@ -73,7 +84,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         state: {
             isLoading: isLoading
         },
-        muiTableContainerProps: {sx: {maxHeight: {xs: '60vh', sm: '100%' }}, },
+        muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
         renderDetailPanel: ({row}) => (
             <div>
                 <div>
