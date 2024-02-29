@@ -17,7 +17,8 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
     const [timeOutRefreshToken, setTimeOutRefreshToken] = useState<number>();
 
     const getTriggerTime = (expirationTime: string) => {
-        return dayjs(expirationTime).subtract(5, "minute").diff(dayjs());
+        const timeDiff = dayjs(expirationTime).subtract(5, "minute").diff(dayjs());
+        return timeDiff > 0 ? timeDiff : 0;
     };
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
     }, []);
 
     useEffect(() => {
-        if (!timeOutRefreshToken) return;
+        if (timeOutRefreshToken === undefined) return;
 
         const refreshIdToken = setTimeout(() => {
             auth.currentUser?.getIdTokenResult(true).then((idTokenResult) => {
