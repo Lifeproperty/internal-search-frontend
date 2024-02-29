@@ -36,6 +36,13 @@ export default function Home() {
             if (condition.bathroomList.length > 0) {
                 isMatch = isMatch && condition.bathroomList.includes(row.bathroom);
             }
+            if (condition.postFormTypeList.length > 0) {
+                isMatch = isMatch && condition.postFormTypeList.includes(row.postFrom);
+            }
+            if (condition.areaLVList.length > 0) {
+                const splitAreaLV = row.areaLV.split(', ');
+                isMatch = isMatch && condition.areaLVList.some(areaLV => splitAreaLV.includes(areaLV));
+            }
             if (condition.minPrice) {
                 isMatch = isMatch && condition.minPrice <= row.price;
             }
@@ -56,7 +63,7 @@ export default function Home() {
     return (
         <Container disableGutters={true} >
             <div className={"flex flex-col gap-2 mt-4"}>
-                <SearchForm properties={data || []} onSearch={searchHandler}/>
+                <SearchForm properties={data || []} onSearch={searchHandler} />
                 <ListingTable rows={tableRows} isLoading={isLoading}/>
             </div>
         </Container>

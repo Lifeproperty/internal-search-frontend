@@ -9,6 +9,10 @@ export const getAllListings = async () => {
     return response.data.data;
 };
 
+export const getAllZoneListings = async () => {
+    const response = await authAxios().get<{ data: String[] }>(`${baseListingsUrl}/zone/all`);
+    return response.data.data;
+};
 
 export const getImagesFromSku = async (sku: string, limit?: number) => {
     const response = await authAxios().get<ImageListType>(`${baseListingsUrl}/images/${sku}`, {

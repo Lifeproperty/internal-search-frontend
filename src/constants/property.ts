@@ -17,7 +17,10 @@ export enum PostType {
     Sell = "Sell",
 }
 
-
+export enum PostFormType {
+    Agent = "Agent",
+    Owner = "Owner",
+}
 
 
 

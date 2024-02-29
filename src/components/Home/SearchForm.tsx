@@ -8,8 +8,9 @@ import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {PostType, PropertyType} from "@/constants/property";
+import {PostFormType, PostType, PropertyType} from "@/constants/property";
 import SearchIcon from "@mui/icons-material/Search";
+import useGetAllZoneListings from "@/hooks/useGetAllZoneListings";
 
 interface SearchFormProps {
     properties: Property[];
@@ -17,15 +18,18 @@ interface SearchFormProps {
 }
 
 export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
+    const {data: areaLVOptions} = useGetAllZoneListings();
     const {control, register, handleSubmit, setError, formState: {errors,}, trigger, reset} = useForm<SearchFormType>({
         defaultValues: {
             areaLPList: [],
+            areaLVList: [],
             skuList: [],
             postTypeList: [],
             propertyTypeList: [],
             bathroomList: [],
             bedRoomList: [],
             projectNameList: [],
+            postFormTypeList: [],
             minPrice: undefined,
             maxPrice: undefined,
             minAreaSize: undefined,
@@ -37,6 +41,7 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
     const projectNameOptions: string[] = Array.from(new Set(properties?.map((property) => property.titleEN)) || []);
     const propertyTypeOptions: PropertyType[] = Object.values(PropertyType);
     const postTypeOptions: PostType[] = Object.values(PostType);
+    const postFormTypeOptions: PostFormType[] = Object.values(PostFormType);
     const bedRoomOptions = ["Studio", ...new Array(10).fill(0).map((_, index) => (index + 1).toString())];
     const bathroomOptions = new Array(10).fill(0).map((_, index) => (index + 1).toString());
 
@@ -109,7 +114,7 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                 )}
                             />
                         </Grid>
-                        <Grid xs={12} sm={6}>
+                        <Grid xs={12} sm={12}>
                             <Controller
                                 name="projectNameList"
                                 control={control}
@@ -148,6 +153,23 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                             />
                         </Grid>
 
+                        <Grid xs={12} sm={6} >
+                            <Controller
+                                name="areaLVList"
+                                control={control}
+                                render={({field: {onChange, ...field}}) => (
+                                    <Autocomplete
+                                        {...field}
+                                        multiple
+                                        options={areaLVOptions || []}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Area LV" placeholder="Area LV"/>
+                                        )}
+                                        onChange={(e, data) => onChange(data)}
+                                    />
+                                )}
+                            />
+                        </Grid>
 
                         <Grid xs={12} sm={3}>
                             <Controller
@@ -197,6 +219,23 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                             <TextField {...params} label="Bathroom" placeholder="Bathroom"/>
                                         )}
                                         getOptionLabel={(option) => `${option} Bathroom`}
+                                        onChange={(e, data) => onChange(data)}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid xs={12} sm={3}>
+                            <Controller
+                                name="postFormTypeList"
+                                control={control}
+                                render={({field: {onChange, ...field}}) => (
+                                    <Autocomplete
+                                        {...field}
+                                        multiple
+                                        options={postFormTypeOptions}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Post From" placeholder="Post From"/>
+                                        )}
                                         onChange={(e, data) => onChange(data)}
                                     />
                                 )}
