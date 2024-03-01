@@ -31,10 +31,18 @@ export default function Home() {
                 isMatch = isMatch && condition.propertyTypeList.includes(row.propertyType);
             }
             if (condition.bedRoomList.length > 0) {
-                isMatch = isMatch && condition.bedRoomList.includes(row.bedroom);
+                if (condition.bedRoomList.includes('3')) {
+                    isMatch = isMatch && !isNaN(Number(row.bedroom)) && (+row.bedroom) >= 3;
+                } else {
+                    isMatch = isMatch && condition.bedRoomList.includes(row.bedroom);
+                }
             }
             if (condition.bathroomList.length > 0) {
-                isMatch = isMatch && condition.bathroomList.includes(row.bathroom);
+                if (condition.bathroomList.includes('3')) {
+                    isMatch = isMatch && !isNaN(Number(row.bathroom)) && (+row.bathroom) >= 3;
+                } else {
+                    isMatch = isMatch && condition.bathroomList.includes(row.bathroom);
+                }
             }
             if (condition.postFormTypeList.length > 0) {
                 isMatch = isMatch && condition.postFormTypeList.includes(row.postFrom);

@@ -3,7 +3,6 @@ import React from "react";
 import {SignInForm} from "@/components/Login/SignInForm";
 
 const Login = () => {
-
     return (
         <SignInForm/>
     );

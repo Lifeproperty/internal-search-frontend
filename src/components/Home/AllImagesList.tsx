@@ -3,7 +3,6 @@ import {ImageList, ImageListItem, Skeleton} from "@mui/material";
 import Image from "next/image";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import {useTheme} from "@mui/material/styles";
-import {auth} from "@/config/firebase";
 
 interface AllImagesListProps {
     sku: string;
