@@ -1,9 +1,12 @@
 "use client";
 import {Property} from "@/types/listing";
-import {Link} from "@mui/material";
+import {Button, Divider, Link, Snackbar} from "@mui/material";
 import {ListingImage} from "@/components/Home/ListingImage";
-import {MaterialReactTable, MRT_ColumnDef, useMaterialReactTable} from "material-react-table";
-import {useMemo} from "react";
+import {MaterialReactTable, MRT_ColumnDef, MRT_Row, useMaterialReactTable} from "material-react-table";
+import {useMemo, useState} from "react";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Typography from "@mui/material/Typography";
+import {ListingDetail} from "@/components/Home/ListingDetail";
 
 interface ListingTableProps {
     rows: Property[];
@@ -11,6 +14,8 @@ interface ListingTableProps {
 }
 
 export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
+    const [message, setMessage] = useState<string>();
+    const [open, setOpen] = useState<boolean>(false);
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
         () => [
@@ -77,6 +82,11 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         ], [],
     );
 
+    const clickCopyHandler = async (text: string) => {
+        setMessage(text);
+        setOpen(true);
+    };
+
     const table = useMaterialReactTable({
         enableStickyHeader: true,
         columns,
@@ -86,16 +96,19 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         },
         muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
         renderDetailPanel: ({row}) => (
-            <div>
-                <div>
-                    Bedroom: {row.original.bedroom}
-                </div>
-            </div>
+            <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
         ),
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
 
     return (
-        <MaterialReactTable table={table}/>
+        <>
+            <MaterialReactTable table={table}/>
+            <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}}
+                      open={open}
+                      onClose={() => setOpen(false)}
+                      message={message}
+            />
+        </>
     );
 };
