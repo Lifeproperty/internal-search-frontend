@@ -23,4 +23,9 @@ export enum PostFormType {
 }
 
 
+export enum UpdateAvailabilityType {
+    Less_than_7_days = "Less than 7 days",
+    Less_than_30_days = "Less than 30 days"
+}
+
 

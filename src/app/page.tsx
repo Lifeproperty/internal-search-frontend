@@ -6,6 +6,8 @@ import {SearchForm} from "@/components/Home/SearchForm";
 import {SearchFormType} from "@/types/searchForm";
 import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";
+import {UpdateAvailabilityType} from "@/constants/property";
+import dayjs from "dayjs";
 
 export default function Home() {
     const {data, isLoading, refetch} = useGetAllListings();
@@ -14,11 +16,6 @@ export default function Home() {
     useEffect(() => {
         setTableRows(data || []);
     }, [data]);
-
-    // เพิ่มใน internal search
-    // -เติม ปุ่ม pet allow , exclusive
-    // -stamp time : update within 7 days/ 30days / anytime
-    // -ปุ่ม drop down status หลังโทรเสร็จ (available/not available/cannot reach
 
     const searchHandler = (condition: SearchFormType) => {
         const filteredRows = data?.filter((row) => {
@@ -37,6 +34,9 @@ export default function Home() {
             }
             if (condition.propertyTypeList.length > 0) {
                 isMatch = isMatch && condition.propertyTypeList.includes(row.propertyType);
+            }
+            if (condition.availabilityList.length > 0) {
+                isMatch = isMatch && condition.availabilityList.includes(row.availability);
             }
             if (condition.bedRoomList.length > 0) {
                 if (condition.bedRoomList.includes("3")) {
@@ -70,6 +70,26 @@ export default function Home() {
             }
             if (condition.maxAreaSize) {
                 isMatch = isMatch && condition.maxAreaSize >= row.areaSize;
+            }
+            if (condition.petAllowed) {
+                isMatch = isMatch && row.petAllowed === "Allow";
+            }
+            if (condition.exclusive) {
+                isMatch = isMatch && row.exclusive === "Exclusive";
+            }
+            if (condition.updateAvailability) {
+                if (!row.updateAvailability) return false;
+
+                const now = dayjs();
+                const updateAvailability = dayjs(row.updateAvailability);
+                const diff = now.diff(updateAvailability, "day");
+                if (condition.updateAvailability === UpdateAvailabilityType.Less_than_7_days) {
+                    isMatch = isMatch && diff < 7;
+                } else if (condition.updateAvailability === UpdateAvailabilityType.Less_than_30_days) {
+                    isMatch = isMatch && diff < 30;
+                } else {
+                    return false;
+                }
             }
             return isMatch;
         });

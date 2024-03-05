@@ -16,6 +16,7 @@ export interface Property {
     bedroom: string;
     bathroom: string;
     petAllowed: string;
+    exclusive: string;
     facingDirection: string;
     unitNumber: string;
     buildingYear: number;
@@ -31,6 +32,7 @@ export interface Property {
     availability: AvailabilityType;
     psCode: number;
     comment: string;
+    updateAvailability: string;
 }
 
 export interface ListingTable {

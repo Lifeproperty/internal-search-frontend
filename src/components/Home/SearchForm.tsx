@@ -1,5 +1,14 @@
 import * as React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Autocomplete, Box, Stack, TextField} from "@mui/material";
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Autocomplete,
+    Box, Checkbox,
+    FormControlLabel,
+    Stack,
+    TextField
+} from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
 import {SearchFormType} from "@/types/searchForm";
 import {Property} from "@/types/listing";
@@ -8,9 +17,10 @@ import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {PostFormType, PostType, PropertyType} from "@/constants/property";
+import {PostFormType, PostType, PropertyType, UpdateAvailabilityType} from "@/constants/property";
 import SearchIcon from "@mui/icons-material/Search";
 import useGetAllZoneListings from "@/hooks/useGetAllZoneListings";
+import {AvailabilityType} from "@/types/availability";
 
 interface SearchFormProps {
     properties: Property[];
@@ -30,10 +40,14 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
             bedRoomList: [],
             projectNameList: [],
             postFormTypeList: [],
-            minPrice: undefined,
-            maxPrice: undefined,
-            minAreaSize: undefined,
-            maxAreaSize: undefined,
+            availabilityList: [],
+            updateAvailability: null,
+            petAllowed: false,
+            exclusive: false,
+            minPrice: null,
+            maxPrice: null,
+            minAreaSize: null,
+            maxAreaSize: null,
         }
     });
     const skuOptions: string[] = Array.from(new Set(properties?.map((property) => property.sku)) || []);
@@ -44,6 +58,8 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
     const postFormTypeOptions: PostFormType[] = Object.values(PostFormType);
     const bedRoomOptions = ["Studio", ...new Array(3).fill(0).map((_, index) => (index + 1).toString())];
     const bathroomOptions = new Array(3).fill(0).map((_, index) => (index + 1).toString());
+    const availabilityOptions = Object.values(AvailabilityType);
+    const updateAvailabilityOptions = Object.values(UpdateAvailabilityType);
 
     const onSubmit = (data: SearchFormType) => {
         console.log(data);
@@ -286,7 +302,67 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                 )}
                             />
                         </Grid>
-
+                        <Grid xs={12}>
+                            <Typography fontWeight={500}>
+                                Other Criteria
+                            </Typography>
+                        </Grid>
+                        <Grid xs={12} sm={3}>
+                            <Controller
+                                name="availabilityList"
+                                control={control}
+                                render={({field: {onChange, ...field}}) => (
+                                    <Autocomplete
+                                        {...field}
+                                        multiple
+                                        options={availabilityOptions}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Availability" placeholder="Availability"/>
+                                        )}
+                                        onChange={(e, data) => onChange(data)}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid xs={12} sm={3}>
+                            <Controller
+                                name="updateAvailability"
+                                control={control}
+                                render={({field: {onChange, ...field}}) => (
+                                    <Autocomplete
+                                        {...field}
+                                        options={updateAvailabilityOptions}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Update Availability"
+                                                       placeholder="Update Availability"/>
+                                        )}
+                                        onChange={(e, data) => onChange(data)}
+                                    />
+                                )}
+                            />
+                        </Grid>
+                        <Grid xs={6} sm={3} md={2} className={"flex item-center"}>
+                            <Controller
+                                name="petAllowed"
+                                control={control}
+                                render={({field: {onChange, value, ...field}}) => (
+                                    <FormControlLabel control={<Checkbox {...field} checked={value}
+                                                                         onChange={event => onChange(event.target.checked)}/>}
+                                                      label="Pet Allowed"/>
+                                )}
+                            />
+                        </Grid>
+                        <Grid xs={6} sm={3} md={2} className={"flex item-center"}>
+                            <Controller
+                                name="exclusive"
+                                control={control}
+                                render={({field: {onChange, value, ...field}}) => (
+                                    <FormControlLabel control={<Checkbox {...field} checked={value}
+                                                                         onChange={event => onChange(event.target.checked)}/>}
+                                                      label="Exclusive"/>
+                                )}
+                            />
+                        </Grid>
 
                         <Grid xs={12}>
                             <Stack spacing={2} direction="row" justifyContent={"end"}>

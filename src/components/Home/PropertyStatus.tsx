@@ -10,6 +10,8 @@ import {useState} from "react";
 import {LoadingButton} from "@mui/lab";
 import {QueryObserverResult, RefetchOptions} from "@tanstack/query-core";
 import {AvailabilityType} from "@/types/availability";
+import dayjs from "dayjs";
+import Typography from "@mui/material/Typography";
 
 interface PropertyCommentProps {
     property: Property;
@@ -32,6 +34,7 @@ export const PropertyStatus = ({property, refetch}: PropertyCommentProps) => {
         }
     });
     const availableOptions = Object.values(AvailabilityType);
+    const updateAvailabilityText = property.updateAvailability ? dayjs(property.updateAvailability)?.format("DD/MM/YYYY HH:mm:ss") : "-";
 
     const resetHandler = () => {
         reset({
@@ -71,8 +74,11 @@ export const PropertyStatus = ({property, refetch}: PropertyCommentProps) => {
                             />
                         )}
                     />
-
-
+                </Grid>
+                <Grid xs={12}>
+                    <Typography>
+                        Update Availability: {updateAvailabilityText}
+                    </Typography>
                 </Grid>
                 <Grid xs={12}>
                     <TextField {...register("comment",)}
