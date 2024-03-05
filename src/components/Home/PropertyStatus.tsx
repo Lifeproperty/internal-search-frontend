@@ -57,7 +57,7 @@ export const PropertyStatus = ({property, refetch}: PropertyCommentProps) => {
 
     return (
         <>
-            <Grid component="form" className={"max-w-[calc(100vw-60px)] md:max-w-[600px]"}
+            <Grid component="form" className={"max-w-[calc(100vw-48px)] md:max-w-[600px]"}
                   onSubmit={handleSubmit(onSubmit)}
                   container spacing={2}>
                 <Grid xs={12}>
