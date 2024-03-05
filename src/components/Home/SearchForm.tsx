@@ -93,8 +93,6 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                 )}
                             />
                         </Grid>
-
-
                         <Grid xs={12} sm={6}>
                             <Controller
                                 name="areaLVList"

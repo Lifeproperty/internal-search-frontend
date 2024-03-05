@@ -22,3 +22,8 @@ export const getImagesFromSku = async (sku: string, limit?: number) => {
     });
     return response.data.files;
 };
+
+export const updateListing = async (postType: string, sku: string, data: Partial<Property>) => {
+    const response = await authAxios().put<{ data: Property }>(`${baseListingsUrl}/${postType}/${sku}`, data);
+    return response.data.data;
+};

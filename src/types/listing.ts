@@ -1,4 +1,5 @@
 import {PostFormType, PostType, PropertyType} from "@/constants/property";
+import {AvailabilityType} from "@/types/availability";
 
 export interface Property {
     areaLP: string;
@@ -27,8 +28,9 @@ export interface Property {
     externalDataSource: string;
     feedbackChecked: string;
     listedOn: string;
-    availability: string;
+    availability: AvailabilityType;
     psCode: number;
+    comment: string;
 }
 
 export interface ListingTable {

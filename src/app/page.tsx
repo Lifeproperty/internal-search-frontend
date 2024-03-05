@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";
 
 export default function Home() {
-    const {data, isLoading} = useGetAllListings();
+    const {data, isLoading, refetch} = useGetAllListings();
     const [tableRows, setTableRows] = useState<Property[]>([]);
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function Home() {
         <Container disableGutters={true}>
             <div className={"flex flex-col gap-2 mt-4"}>
                 <SearchForm properties={data || []} onSearch={searchHandler}/>
-                <ListingTable rows={tableRows} isLoading={isLoading}/>
+                <ListingTable rows={tableRows} isLoading={isLoading} refetch={refetch}/>
             </div>
         </Container>
     );

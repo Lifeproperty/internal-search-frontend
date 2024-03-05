@@ -1,21 +1,21 @@
 "use client";
 import {Property} from "@/types/listing";
-import {Button, Divider, Link, Snackbar} from "@mui/material";
 import {ListingImage} from "@/components/Home/ListingImage";
-import {MaterialReactTable, MRT_ColumnDef, MRT_Row, useMaterialReactTable} from "material-react-table";
-import {useMemo, useState} from "react";
-import ContentCopyIcon from "@mui/icons-material/ContentCopy";
-import Typography from "@mui/material/Typography";
+import {MaterialReactTable, MRT_ColumnDef, useMaterialReactTable} from "material-react-table";
+import {useMemo} from "react";
 import {ListingDetail} from "@/components/Home/ListingDetail";
+import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
+import {useSnackbar} from "notistack";
+import {QueryObserverResult, RefetchOptions} from "@tanstack/query-core";
 
 interface ListingTableProps {
     rows: Property[];
     isLoading?: boolean;
+    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Property[], Error>>;
 }
 
-export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
-    const [message, setMessage] = useState<string>();
-    const [open, setOpen] = useState<boolean>(false);
+export const ListingTable = ({rows, isLoading, refetch}: ListingTableProps) => {
+    const {enqueueSnackbar} = useSnackbar();
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
         () => [
@@ -26,7 +26,18 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 ),
                 size: 120,
             },
-            {accessorKey: "titleEN", header: "Title EN", size: 200,},
+            {
+                accessorKey: "titleEN",
+                header: "Title", size: 160,
+                Cell: ({renderedCellValue, row}) => (
+                    <div className={"flex flex-row items-center gap-2"}>
+                        <AvailabilityDot value={row.original.availability}/>
+                        <div>
+                            {row.original.titleEN}
+                        </div>
+                    </div>
+                ),
+            },
             {accessorKey: "sku", header: "SKU", size: 50},
             {accessorKey: "areaLP", header: "Area LP", size: 100},
             {accessorKey: "areaLV", header: "Area LV", size: 200},
@@ -54,26 +65,26 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             {accessorKey: "facingDirection", header: "Facing Direction", size: 150},
             {accessorKey: "unitNumber", header: "Unit Number", size: 150},
             // {accessorKey: "buildingYear", header: "Building Year", size: 150},
-            {accessorKey: "lineId", header: "Line ID", size: 150},
-            {
-                accessorKey: "tel",
-                header: "Tel.",
-                size: 150,
-                Cell: ({renderedCellValue, row}) => {
-                    const tels: string[] = row.original.tel.split(",");
-                    return <div className={"flex flex-col gap-2"}>
-                        {tels.map((tel, index) => (
-                            <Link href={`tel:${tel}`} key={index}>
-                                {tel}
-                            </Link>
-                        ))}
-                    </div>;
-                },
-            },
-            {accessorKey: "name", header: "Name", size: 150},
-            {accessorKey: "whatsapp", header: "Whatsapp", size: 150},
-            {accessorKey: "facebookMessenger", header: "Facebook Messenger", size: 150},
-            {accessorKey: "wechat", header: "Wechat", size: 150},
+            // {accessorKey: "lineId", header: "Line ID", size: 150},
+            // {
+            //     accessorKey: "tel",
+            //     header: "Tel.",
+            //     size: 150,
+            //     Cell: ({renderedCellValue, row}) => {
+            //         const tels: string[] = row.original.tel.split(",");
+            //         return <div className={"flex flex-col gap-2"}>
+            //             {tels.map((tel, index) => (
+            //                 <Link href={`tel:${tel}`} key={index}>
+            //                     {tel}
+            //                 </Link>
+            //             ))}
+            //         </div>;
+            //     },
+            // },
+            // {accessorKey: "name", header: "Name", size: 150},
+            // {accessorKey: "whatsapp", header: "Whatsapp", size: 150},
+            // {accessorKey: "facebookMessenger", header: "Facebook Messenger", size: 150},
+            // {accessorKey: "wechat", header: "Wechat", size: 150},
             // {accessorKey: "externalDataSource", header: "External Data Source", size: 150},
             // {accessorKey: "feedbackChecked", header: "Feedback Checked", size: 150},
             // {accessorKey: "listedOn", header: "Listed On", size: 150},
@@ -83,8 +94,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     );
 
     const clickCopyHandler = async (text: string) => {
-        setMessage(text);
-        setOpen(true);
+        enqueueSnackbar(text, {variant: "info"});
     };
 
     const table = useMaterialReactTable({
@@ -96,19 +106,12 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         },
         muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
         renderDetailPanel: ({row}) => (
-            <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
+            <ListingDetail property={row.original} onClickCopy={clickCopyHandler} refetch={refetch}/>
         ),
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
 
     return (
-        <>
-            <MaterialReactTable table={table}/>
-            <Snackbar anchorOrigin={{vertical: "top", horizontal: "right"}}
-                      open={open}
-                      onClose={() => setOpen(false)}
-                      message={message}
-            />
-        </>
+        <MaterialReactTable table={table}/>
     );
 };

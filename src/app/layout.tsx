@@ -9,6 +9,7 @@ import {AuthProviders} from "@/providers/AuthProviders";
 import {NavBar} from "@/components/NavBar";
 import {ReduxProvider} from "@/providers/ReduxProvider";
 import {QueryProvider} from "@/providers/QueryProvider";
+import {SnackbarProviders} from "@/providers/SnackbarProviders";
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -20,20 +21,22 @@ export default function RootLayout({children}: Readonly<{ children: React.ReactN
     return (
         <html lang="en">
         <body>
-        <QueryProvider>
-            <ReduxProvider>
-                <AuthProviders>
-                    <AppRouterCacheProvider>
-                        <ThemeProvider theme={theme}>
-                            <div className={'bg-gray-50 h-screen'}>
-                                <NavBar/>
-                                {children}
-                            </div>
-                        </ThemeProvider>
-                    </AppRouterCacheProvider>
-                </AuthProviders>
-            </ReduxProvider>
-        </QueryProvider>
+        <SnackbarProviders>
+            <QueryProvider>
+                <ReduxProvider>
+                    <AuthProviders>
+                        <AppRouterCacheProvider>
+                            <ThemeProvider theme={theme}>
+                                <div className={"bg-gray-50 h-screen"}>
+                                    <NavBar/>
+                                    {children}
+                                </div>
+                            </ThemeProvider>
+                        </AppRouterCacheProvider>
+                    </AuthProviders>
+                </ReduxProvider>
+            </QueryProvider>
+        </SnackbarProviders>
         </body>
         </html>
     );
