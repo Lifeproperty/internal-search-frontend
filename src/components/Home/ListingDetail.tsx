@@ -5,15 +5,13 @@ import {SyntheticEvent, useState} from "react";
 import PropertyContact from "@/components/Home/PropertyContact";
 import {PropertyDetail} from "@/components/Home/PropertyDetail";
 import {PropertyStatus} from "@/components/Home/PropertyStatus";
-import {QueryObserverResult, RefetchOptions} from "@tanstack/query-core";
 
 interface ListingDetailProps {
     property: Property;
     onClickCopy?: (text: string) => void;
-    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Property[], Error>>;
 }
 
-export const ListingDetail = ({property, onClickCopy, refetch}: ListingDetailProps) => {
+export const ListingDetail = ({property, onClickCopy}: ListingDetailProps) => {
     const [value, setValue] = useState("1");
 
 
@@ -42,7 +40,7 @@ export const ListingDetail = ({property, onClickCopy, refetch}: ListingDetailPro
                 <PropertyDetail property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="3" sx={{padding: 2}}>
-                <PropertyStatus property={property} refetch={refetch}/>
+                <PropertyStatus property={property}/>
             </TabPanel>
         </TabContext>
     );

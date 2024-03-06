@@ -2,20 +2,20 @@ import {Autocomplete, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/system/Unstable_Grid";
 import * as React from "react";
+import {useState} from "react";
 import {Property} from "@/types/listing";
 import {Controller, useForm} from "react-hook-form";
 import {updateListing} from "@/services/listingsApi";
 import {useSnackbar} from "notistack";
-import {useState} from "react";
 import {LoadingButton} from "@mui/lab";
-import {QueryObserverResult, RefetchOptions} from "@tanstack/query-core";
 import {AvailabilityType} from "@/types/availability";
 import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
+import {useQueryClient} from "@tanstack/react-query";
+import {QueryKey} from "@/constants/queryKey";
 
 interface PropertyCommentProps {
     property: Property;
-    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Property[], Error>>;
 }
 
 interface FormValues {
@@ -23,7 +23,8 @@ interface FormValues {
     availability: AvailabilityType;
 }
 
-export const PropertyStatus = ({property, refetch}: PropertyCommentProps) => {
+export const PropertyStatus = ({property}: PropertyCommentProps) => {
+    const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [comment, setComment] = useState<string>(property?.comment);
     const {enqueueSnackbar} = useSnackbar();
@@ -41,13 +42,28 @@ export const PropertyStatus = ({property, refetch}: PropertyCommentProps) => {
             comment: comment
         });
     };
+
+    const updateOldCache = (response: Property) => {
+        queryClient.setQueryData([QueryKey.GetAllListings], (oldData: Property[] | undefined) => {
+            if (oldData) {
+                return oldData.map((item) => {
+                    if (item.sku === property.sku && item.postType === property.postType) {
+                        return response;
+                    }
+                    return item;
+                });
+            }
+            return oldData;
+        });
+    };
+
     const onSubmit = async (data: FormValues) => {
         try {
             setIsLoading(true);
             const response = await updateListing(property.postType, property.sku, data);
             setComment(response.comment);
+            updateOldCache(response);
             enqueueSnackbar("Comment updated", {variant: "success"});
-            refetch();
         } catch (e) {
             enqueueSnackbar("Error updating comment", {variant: "error"});
         } finally {

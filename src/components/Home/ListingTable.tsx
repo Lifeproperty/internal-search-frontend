@@ -6,15 +6,13 @@ import {useMemo} from "react";
 import {ListingDetail} from "@/components/Home/ListingDetail";
 import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
 import {useSnackbar} from "notistack";
-import {QueryObserverResult, RefetchOptions} from "@tanstack/query-core";
 
 interface ListingTableProps {
     rows: Property[];
     isLoading?: boolean;
-    refetch: (options?: RefetchOptions | undefined) => Promise<QueryObserverResult<Property[], Error>>;
 }
 
-export const ListingTable = ({rows, isLoading, refetch}: ListingTableProps) => {
+export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const {enqueueSnackbar} = useSnackbar();
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
@@ -102,11 +100,12 @@ export const ListingTable = ({rows, isLoading, refetch}: ListingTableProps) => {
         columns,
         enableColumnPinning: true,
         state: {
-            isLoading: isLoading
+            isLoading: isLoading,
         },
+        autoResetPageIndex: false, //don't reset the page index when data changes
         muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
         renderDetailPanel: ({row}) => (
-            <ListingDetail property={row.original} onClickCopy={clickCopyHandler} refetch={refetch}/>
+            <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
         ),
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
