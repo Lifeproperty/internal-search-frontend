@@ -62,7 +62,6 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
     const updateAvailabilityOptions = Object.values(UpdateAvailabilityType);
 
     const onSubmit = (data: SearchFormType) => {
-        console.log(data);
         onSearch(data);
     };
 
