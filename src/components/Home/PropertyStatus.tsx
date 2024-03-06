@@ -26,9 +26,12 @@ interface FormValues {
 export const PropertyStatus = ({property}: PropertyCommentProps) => {
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [comment, setComment] = useState<string>(property?.comment);
+    const [summitFromValue, setSummitFromValue] = useState<FormValues>({
+        comment: property.comment,
+        availability: property.availability
+    });
     const {enqueueSnackbar} = useSnackbar();
-    const {control, register, handleSubmit, setError, formState: {errors,}, trigger, reset} = useForm<FormValues>({
+    const {control, register, handleSubmit, reset} = useForm<FormValues>({
         defaultValues: {
             comment: property.comment,
             availability: property.availability
@@ -39,7 +42,8 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
 
     const resetHandler = () => {
         reset({
-            comment: comment
+            comment: summitFromValue?.comment,
+            availability: summitFromValue?.availability
         });
     };
 
@@ -61,7 +65,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
         try {
             setIsLoading(true);
             const response = await updateListing(property.postType, property.sku, data);
-            setComment(response.comment);
+            setSummitFromValue(data)
             updateOldCache(response);
             enqueueSnackbar("Comment updated", {variant: "success"});
         } catch (e) {
