@@ -30,6 +30,7 @@ export const AllImagesList = ({sku}: AllImagesListProps) => {
                     <Image src={`https://drive.google.com/uc?export=view&id=${image.id}`}
                            className={"object-cover"}
                            priority
+                           sizes={isSmScreen ? '50vw' : '100vw'}
                            fill
                            alt={`image`}/>
                 </ImageListItem>

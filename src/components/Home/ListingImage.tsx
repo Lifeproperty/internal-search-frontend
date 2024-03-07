@@ -24,6 +24,7 @@ export const ListingImage = ({sku}: ListingImageProps) => {
                        className={"object-cover hover:cursor-pointer"}
                        priority
                        fill
+                       sizes={'30vw'}
                        onClick={() => setOpen(true)}
                        alt={"image"}/>
             ) : (
