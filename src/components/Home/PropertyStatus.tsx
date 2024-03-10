@@ -13,6 +13,8 @@ import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import {useQueryClient} from "@tanstack/react-query";
 import {QueryKey} from "@/constants/queryKey";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import theme from "@/theme";
 
 interface PropertyCommentProps {
     property: Property;
@@ -24,6 +26,9 @@ interface FormValues {
 }
 
 export const PropertyStatus = ({property}: PropertyCommentProps) => {
+    const isMornThanSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
+    const readOnly = !isMornThanSmScreen;
+    const size = isMornThanSmScreen ? "medium" : "small";
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [summitFromValue, setSummitFromValue] = useState<FormValues>({
@@ -65,7 +70,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
         try {
             setIsLoading(true);
             const response = await updateListing(property.postType, property.sku, data);
-            setSummitFromValue(data)
+            setSummitFromValue(data);
             updateOldCache(response);
             enqueueSnackbar("Comment updated", {variant: "success"});
         } catch (e) {
@@ -87,9 +92,11 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                         render={({field: {onChange, ...field}}) => (
                             <Autocomplete
                                 {...field}
-                                disablePortal
+                                size={size}
                                 options={availableOptions}
-                                renderInput={(params) => <TextField {...params} label="Availability"/>}
+                                renderInput={({inputProps, ...rest}) => (
+                                    <TextField {...rest} label="Availability" inputProps={{...inputProps, readOnly}}/>
+                                )}
                                 onChange={(e, data) => onChange(data)}
                             />
                         )}
@@ -104,6 +111,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                     <TextField {...register("comment",)}
                                rows={6}
                                multiline
+                               size={size}
                                label="Comments"
                                variant="outlined"
                                fullWidth/>

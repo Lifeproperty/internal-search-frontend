@@ -17,20 +17,20 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
     const wechats: string[] = property.wechat.split(",").filter(wechat => !!wechat).map(wechat => wechat.replaceAll("+", "").replaceAll(" ", ""));
 
     return (
-        <div className={"flex flex-col"}>
-            <div className={"flex flex-row gap-2"}>
+        <div className={"flex flex-col gap-2 max-w-[calc(100vw-48px)] md:max-w-full"}>
+            <div className={"flex flex-col "}>
                 <Typography fontWeight={500}>
-                    Name:
+                    Name
                 </Typography>
                 <Typography>
                     {property.name}
                 </Typography>
             </div>
             {tels.length > 0 && (
-                <div className={"flex flex-row gap-2"}>
+                <div className={"flex flex-col"}>
                     <div>
                         <Typography fontWeight={500}>
-                            Call:
+                            Call
                         </Typography>
                     </div>
                     <div className={"flex flex-col"}>
@@ -45,10 +45,10 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
                 </div>
             )}
             {lineIds.length > 0 && (
-                <div className={"flex flex-row gap-2"}>
+                <div className={"flex flex-col"}>
                     <div>
                         <Typography fontWeight={500}>
-                            Line:
+                            Line
                         </Typography>
                     </div>
                     <div className={"flex flex-col"}>
@@ -59,10 +59,10 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
                 </div>
             )}
             {whatsapps.length > 0 && (
-                <div className={"flex flex-row gap-2"}>
+                <div className={"flex flex-col "}>
                     <div>
                         <Typography fontWeight={500}>
-                            WhatsApp:
+                            WhatsApp
                         </Typography>
                     </div>
                     <div className={"flex flex-col "}>
@@ -77,10 +77,10 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
                 </div>
             )}
             {wechats.length > 0 && (
-                <div className={"flex flex-row gap-2"}>
+                <div className={"flex flex-col "}>
                     <div>
                         <Typography fontWeight={500}>
-                            Wechat:
+                            Wechat
                         </Typography>
                     </div>
                     <div className={"flex flex-col "}>
@@ -95,10 +95,10 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
                 </div>
             )}
             {facebookMessengers.length > 0 && (
-                <div className={"flex flex-row gap-2"}>
+                <div className={"flex flex-col"}>
                     <div>
                         <Typography fontWeight={500}>
-                            Facebook Messenger:
+                            Facebook Messenger
                         </Typography>
                     </div>
                     <div className={"flex flex-col "}>

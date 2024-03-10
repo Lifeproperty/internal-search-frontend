@@ -3,7 +3,7 @@ import {Box, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {SyntheticEvent, useState} from "react";
 import PropertyContact from "@/components/Home/PropertyContact";
-import {PropertyDetail} from "@/components/Home/PropertyDetail";
+import {PropertyDescription} from "@/components/Home/PropertyDescription";
 import {PropertyStatus} from "@/components/Home/PropertyStatus";
 
 interface ListingDetailProps {
@@ -29,15 +29,16 @@ export const ListingDetail = ({property, onClickCopy}: ListingDetailProps) => {
             <Box sx={{borderBottom: 1, borderColor: "divider"}}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
                     <Tab label="Contact" value="1"/>
-                    <Tab label="Details" value="2"/>
+                    <Tab label="Description" value="2"/>
                     <Tab label="Status" value="3"/>
                 </TabList>
             </Box>
+
             <TabPanel value="1" sx={{padding: 2}}>
                 <PropertyContact property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="2" sx={{padding: 2}}>
-                <PropertyDetail property={property} onClickCopy={clickCopyHandler}/>
+                <PropertyDescription property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="3" sx={{padding: 2}}>
                 <PropertyStatus property={property}/>
