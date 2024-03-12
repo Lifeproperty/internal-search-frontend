@@ -76,7 +76,6 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
         reset();
     };
 
-    console.log(isMornThanSmScreen);
     return (
         <Accordion defaultExpanded={true}>
             <AccordionSummary
