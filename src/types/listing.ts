@@ -41,3 +41,9 @@ export interface ListingTable {
     offset?: number;
     limit?: number;
 }
+
+export interface LvId {
+    id: string;
+    sku: string;
+    type: string;
+}

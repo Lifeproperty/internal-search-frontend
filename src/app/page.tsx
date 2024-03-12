@@ -8,9 +8,11 @@ import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";
 import {UpdateAvailabilityType} from "@/constants/property";
 import dayjs from "dayjs";
+import useGetAllLvId from "@/hooks/useGetAllLvId";
 
 export default function Home() {
     const {data, isLoading} = useGetAllListings();
+    const {data: lvIdList} = useGetAllLvId();
     const [condition, setCondition] = useState<SearchFormType>();
     const [tableRows, setTableRows] = useState<Property[]>([]);
 
@@ -104,7 +106,7 @@ export default function Home() {
         <Container disableGutters={true}>
             <div className={"flex flex-col gap-2 mt-4"}>
                 <SearchForm properties={data || []} onSearch={searchHandler}/>
-                <ListingTable rows={tableRows} isLoading={isLoading}/>
+                <ListingTable rows={tableRows} isLoading={isLoading} lvIdList={lvIdList}/>
             </div>
         </Container>
     );

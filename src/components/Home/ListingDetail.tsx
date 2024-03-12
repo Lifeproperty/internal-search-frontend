@@ -1,4 +1,4 @@
-import {Property} from "@/types/listing";
+import {LvId, Property} from "@/types/listing";
 import {Box, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {SyntheticEvent, useState} from "react";
@@ -8,10 +8,11 @@ import {PropertyStatus} from "@/components/Home/PropertyStatus";
 
 interface ListingDetailProps {
     property: Property;
+    lvId?: LvId;
     onClickCopy?: (text: string) => void;
 }
 
-export const ListingDetail = ({property, onClickCopy}: ListingDetailProps) => {
+export const ListingDetail = ({property, onClickCopy, lvId}: ListingDetailProps) => {
     const [value, setValue] = useState("1");
 
 
@@ -38,7 +39,7 @@ export const ListingDetail = ({property, onClickCopy}: ListingDetailProps) => {
                 <PropertyContact property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="2" sx={{padding: 2}}>
-                <PropertyDescription property={property} onClickCopy={clickCopyHandler}/>
+                <PropertyDescription property={property} onClickCopy={clickCopyHandler} lvId={lvId}/>
             </TabPanel>
             <TabPanel value="3" sx={{padding: 2}}>
                 <PropertyStatus property={property}/>

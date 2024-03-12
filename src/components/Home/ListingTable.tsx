@@ -1,5 +1,5 @@
 "use client";
-import {Property} from "@/types/listing";
+import {LvId, Property} from "@/types/listing";
 import {ListingImage} from "@/components/Home/ListingImage";
 import {MaterialReactTable, MRT_ColumnDef, MRT_ExpandedState, useMaterialReactTable} from "material-react-table";
 import {useMemo, useState} from "react";
@@ -13,10 +13,11 @@ import Link from "next/link";
 
 interface ListingTableProps {
     rows: Property[];
+    lvIdList?: LvId[];
     isLoading?: boolean;
 }
 
-export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
+export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => {
     const isMornThanSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
     const {enqueueSnackbar} = useSnackbar();
     const [expanded, setExpanded] = useState<MRT_ExpandedState>({});
@@ -125,9 +126,12 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         // muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
         muiTableBodyCellProps: {sx: {paddingLeft: 1, paddingRight: 0, paddingTop: 1, paddingBottom: 1}},
         muiTableHeadCellProps: {sx: {paddingLeft: 1, paddingRight: 0, width: 0}},
-        renderDetailPanel: ({row}) => (
-            <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
-        ),
+        renderDetailPanel: ({row}) => {
+            const lvId = lvIdList?.find(lvId => lvId.sku === row.original.sku && lvId.type?.toLowerCase() === row.original.postType?.toLowerCase());
+            return (
+                <ListingDetail property={row.original} onClickCopy={clickCopyHandler} lvId={lvId}/>
+            );
+        },
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
 
