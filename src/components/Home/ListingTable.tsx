@@ -99,6 +99,8 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         ] : [
             {
                 header: "Details",
+                enableColumnActions: false,
+                minSize: 310,
                 Cell: ({renderedCellValue, row}) => (
                     <DetailsMobile property={row.original}/>
                 ),
@@ -111,7 +113,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     };
 
     const table = useMaterialReactTable({
-        enableStickyHeader: true,
+        enableStickyHeader: isMornThanSmScreen,
         columns,
         enableColumnPinning: true,
         state: {
@@ -121,6 +123,8 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         onExpandedChange: setExpanded,
         autoResetPageIndex: false, //don't reset the page index when data changes
         // muiTableContainerProps: {sx: {maxHeight: {xs: "60vh", sm: "100%"}},},
+        muiTableBodyCellProps: {sx: {paddingLeft: 1, paddingRight: 0, paddingTop: 1, paddingBottom: 1}},
+        muiTableHeadCellProps: {sx: {paddingLeft: 1, paddingRight: 0, width: 0}},
         renderDetailPanel: ({row}) => (
             <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
         ),

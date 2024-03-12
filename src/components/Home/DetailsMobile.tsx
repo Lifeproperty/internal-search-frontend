@@ -10,7 +10,7 @@ export const DetailsMobile = ({property}: DetailsMobileProps) => {
     return (
         <div className={"flex flex-col gap-2"}>
             <div className={"flex flex-row items-start gap-2"}>
-                <div className={"relative h-[100px] w-[140px] min-w-[140px] overflow-hidden rounded-xl"}>
+                <div className={"relative h-[120px] w-[160px] min-w-[160px] overflow-hidden "}>
                     <ListingImage sku={property.sku}/>
                 </div>
                 <div className={"flex flex-col"}>
