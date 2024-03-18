@@ -23,7 +23,6 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
         () => isMornThanSmScreen ? [
-
             {
                 header: "Image",
                 Cell: ({renderedCellValue, row}) => (
@@ -99,6 +98,12 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
         state: {
             isLoading,
             expanded
+        },
+        initialState: {
+           pagination: {
+               pageSize: 20,
+               pageIndex: 0
+           }
         },
         onExpandedChange: setExpanded,
         autoResetPageIndex: false, //don't reset the page index when data changes
