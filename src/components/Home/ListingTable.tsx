@@ -9,7 +9,6 @@ import {useSnackbar} from "notistack";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@/theme";
 import {DetailsMobile} from "@/components/Home/DetailsMobile";
-import Link from "next/link";
 
 interface ListingTableProps {
     rows: Property[];
@@ -50,7 +49,6 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
             {accessorKey: "propertyType", header: "Property Type", size: 150},
             {accessorKey: "postType", header: "Post Type", size: 150},
             {accessorKey: "postFrom", header: "Post From", size: 150},
-            // {accessorKey: "titleTH", header: "Title TH", size: 150},
             {
                 accessorKey: "price",
                 header: "Price",
@@ -58,12 +56,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                 filterVariant: "range",
                 Cell: ({cell}) => cell.getValue<number>().toLocaleString("en-US")
             },
-            {
-                accessorKey: "areaSize",
-                header: "Area Size",
-                size: 150,
-                filterVariant: "range"
-            },
+            {accessorKey: "areaSize", header: "Area Size", size: 150, filterVariant: "range"},
             {accessorKey: "floor", header: "Floor", size: 150},
             {accessorKey: "bedroom", header: "Bedroom", size: 150},
             {accessorKey: "bathroom", header: "Bathroom", size: 150},
@@ -72,21 +65,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
             {accessorKey: "unitNumber", header: "Unit Number", size: 150},
             {accessorKey: "buildingYear", header: "Building Year", size: 150},
             {accessorKey: "lineId", header: "Line ID", size: 150},
-            {
-                accessorKey: "tel",
-                header: "Tel.",
-                size: 150,
-                Cell: ({renderedCellValue, row}) => {
-                    const tels: string[] = row.original.tel.split(",");
-                    return <div className={"flex flex-col gap-2"}>
-                        {tels.map((tel, index) => (
-                            <Link href={`tel:${tel}`} key={index}>
-                                {tel}
-                            </Link>
-                        ))}
-                    </div>;
-                },
-            },
+            {accessorKey: "tel", header: "Tel.", size: 150,},
             {accessorKey: "name", header: "Name", size: 150},
             {accessorKey: "email", header: "Email", size: 150},
             {accessorKey: "whatsapp", header: "Whatsapp", size: 150},
@@ -110,7 +89,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
     );
 
     const clickCopyHandler = async (text: string) => {
-        enqueueSnackbar(text, {variant: "info"});
+        enqueueSnackbar(text, {variant: "info", autoHideDuration: 3000});
     };
 
     const table = useMaterialReactTable({

@@ -11,6 +11,7 @@ interface PropertyContactProps {
 
 const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
     const tels: string[] = property.tel.split(",").filter(tel => !!tel);
+    const emails: string[] = property.email.split(",").filter(email => !!email);
     const lineIds: string[] = property.lineId.split(",").filter(lineId => !!lineId);
     const whatsapps: string[] = property.whatsapp.split(",").filter(whatsapp => !!whatsapp).map(whatsapp => whatsapp.replaceAll("+", "").replaceAll(" ", ""));
     const facebookMessengers: string[] = property.facebookMessenger.split(",").filter(facebookMessenger => !!facebookMessenger);
@@ -40,6 +41,20 @@ const PropertyContact = ({property, onClickCopy}: PropertyContactProps) => {
                                     {tel}
                                 </Typography>
                             </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
+            {emails.length > 0 && (
+                <div className={"flex flex-col"}>
+                    <div>
+                        <Typography fontWeight={500}>
+                            Email
+                        </Typography>
+                    </div>
+                    <div className={"flex flex-col"}>
+                        {emails.map((email, index) => (
+                            <ContactCopyOrLink key={email} contact={email} onClickCopy={text => onClickCopy(text)}/>
                         ))}
                     </div>
                 </div>

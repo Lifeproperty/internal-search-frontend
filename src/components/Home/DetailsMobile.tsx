@@ -6,6 +6,7 @@ import {Property} from "@/types/listing";
 interface DetailsMobileProps {
     property: Property;
 }
+
 export const DetailsMobile = ({property}: DetailsMobileProps) => {
     return (
         <div className={"flex flex-col gap-2"}>
@@ -77,8 +78,7 @@ export const DetailsMobile = ({property}: DetailsMobileProps) => {
                 </div>
                 <div className={"flex flex-row gap-1"}>
                     <Typography>
-                                    <span
-                                        className={"font-medium"}>PRICE:</span> {property.price?.toLocaleString("en-US") + " "}
+                        <span className={"font-medium"}>PRICE:</span> {property?.price?.toLocaleString("en-US") + " "}
                         <span className={"font-medium"}>({property.postType}, {property.postFrom}) </span>
                     </Typography>
                 </div>

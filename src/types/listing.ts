@@ -20,6 +20,7 @@ export interface Property {
     facingDirection: string;
     unitNumber: string;
     buildingYear: number;
+    email: string;
     lineId: string;
     tel: string;
     name: string;

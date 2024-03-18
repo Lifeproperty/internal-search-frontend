@@ -29,17 +29,17 @@ export const ListingDetail = ({property, onClickCopy, lvId}: ListingDetailProps)
         <TabContext value={value}>
             <Box sx={{borderBottom: 1, borderColor: "divider"}}>
                 <TabList onChange={handleChange} aria-label="lab API tabs example">
-                    <Tab label="Contact" value="1"/>
-                    <Tab label="Description" value="2"/>
+                    <Tab label="Description" value="1"/>
+                    <Tab label="Contact" value="2"/>
                     <Tab label="Status" value="3"/>
                 </TabList>
             </Box>
 
             <TabPanel value="1" sx={{padding: 2}}>
-                <PropertyContact property={property} onClickCopy={clickCopyHandler}/>
+                <PropertyDescription property={property} onClickCopy={clickCopyHandler} lvId={lvId}/>
             </TabPanel>
             <TabPanel value="2" sx={{padding: 2}}>
-                <PropertyDescription property={property} onClickCopy={clickCopyHandler} lvId={lvId}/>
+                <PropertyContact property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="3" sx={{padding: 2}}>
                 <PropertyStatus property={property}/>
