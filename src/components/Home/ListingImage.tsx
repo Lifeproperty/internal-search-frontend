@@ -4,6 +4,7 @@ import useGetImagesFromSku from "@/hooks/useGetImagesFromSku";
 import {Dialog, DialogTitle, Skeleton} from "@mui/material";
 import {useState} from "react";
 import {AllImagesList} from "@/components/Home/AllImagesList";
+import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 
 
 interface ListingImageProps {
@@ -11,12 +12,18 @@ interface ListingImageProps {
 }
 
 export const ListingImage = ({sku}: ListingImageProps) => {
+    const isDesktopScreen = useIsDesktopScreen();
     const {data, isLoading} = useGetImagesFromSku({sku, limit: 1});
     const image = data?.[0];
     const [open, setOpen] = useState(false);
 
-    if (isLoading) return <Skeleton variant="rectangular"/>;
-
+    if (isLoading) {
+        return (
+            <Skeleton variant={isDesktopScreen ? "rounded" : "rectangular"}
+                      height={isDesktopScreen ? 12 : "100%"}
+                      width={isDesktopScreen ? "90%" : "100%"}/>
+        );
+    }
     return (
         <>
             {image ? (
@@ -24,7 +31,7 @@ export const ListingImage = ({sku}: ListingImageProps) => {
                        className={"object-cover hover:cursor-pointer"}
                        priority
                        fill
-                       sizes={'30vw'}
+                       sizes={"30vw"}
                        onClick={() => setOpen(true)}
                        alt={"image"}/>
             ) : (
@@ -34,7 +41,7 @@ export const ListingImage = ({sku}: ListingImageProps) => {
                 </div>
             )}
 
-            <Dialog onClose={() => setOpen(false)} open={open} maxWidth={'md'} fullWidth>
+            <Dialog onClose={() => setOpen(false)} open={open} maxWidth={"md"} fullWidth>
                 <DialogTitle>Images</DialogTitle>
                 <AllImagesList sku={sku}/>
             </Dialog>

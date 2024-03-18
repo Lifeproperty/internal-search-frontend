@@ -13,8 +13,7 @@ import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import {useQueryClient} from "@tanstack/react-query";
 import {QueryKey} from "@/constants/queryKey";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "@/theme";
+import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 
 interface PropertyCommentProps {
     property: Property;
@@ -26,9 +25,9 @@ interface FormValues {
 }
 
 export const PropertyStatus = ({property}: PropertyCommentProps) => {
-    const isMornThanSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
-    const readOnly = !isMornThanSmScreen;
-    const size = isMornThanSmScreen ? "medium" : "small";
+    const isDesktopScreen = useIsDesktopScreen()
+    const readOnly = !isDesktopScreen;
+    const size = isDesktopScreen ? "medium" : "small";
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [summitFromValue, setSummitFromValue] = useState<FormValues>({

@@ -7,6 +7,7 @@ import {
     Box,
     Checkbox,
     FormControlLabel,
+    Skeleton,
     Stack,
     TextField
 } from "@mui/material";
@@ -20,22 +21,23 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import {PostFormType, PostType, PropertyType, UpdateAvailabilityType} from "@/constants/property";
 import SearchIcon from "@mui/icons-material/Search";
-import useGetAllZoneListings from "@/hooks/useGetAllZoneListings";
 import {AvailabilityType} from "@/types/availability";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "@/theme";
+import {getUniqueValues} from "@/utils/valueUtils";
+import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 
 interface SearchFormProps {
     properties: Property[];
     onSearch: (data: SearchFormType) => void;
+    isLoading: boolean;
 }
 
-export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
-    const isMornThanSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
-    const size = isMornThanSmScreen ? "medium" : "small";
-    const readOnly = !isMornThanSmScreen;
-    const {data: areaLVOptions} = useGetAllZoneListings();
-    const {control, register, handleSubmit, setError, formState: {errors,}, trigger, reset} = useForm<SearchFormType>({
+export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) => {
+    const isDesktopScreen = useIsDesktopScreen();
+    const size = isDesktopScreen ? "medium" : "small";
+    const skeletonHeight = size === "medium" ? 56 : 40;
+    const readOnly = !isDesktopScreen;
+    const areaLVOptions = getUniqueValues(properties.map(property => property.areaLV?.split(",").map(value => value.trim())).flat() || []);
+    const {control, register, handleSubmit, reset} = useForm<SearchFormType>({
         defaultValues: {
             areaLPList: [],
             areaLVList: [],
@@ -56,9 +58,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
             maxAreaSize: null,
         }
     });
-    const skuOptions: string[] = Array.from(new Set(properties?.map((property) => property.sku)) || []);
-    const areaLPOptions: string[] = Array.from(new Set(properties?.map((property) => property.areaLP)) || []);
-    const projectNameOptions: string[] = Array.from(new Set(properties?.map((property) => property.titleEN)) || []);
+    const skuOptions: string[] = getUniqueValues(properties?.map((property) => property.sku) || []);
+    const areaLPOptions: string[] = getUniqueValues(properties?.map((property) => property.areaLP) || []);
+    const projectNameOptions: string[] = getUniqueValues(properties?.map((property) => property.titleEN) || []);
     const propertyTypeOptions: PropertyType[] = Object.values(PropertyType);
     const postTypeOptions: PostType[] = Object.values(PostType);
     const postFormTypeOptions: PostFormType[] = Object.values(PostFormType);
@@ -68,7 +70,7 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
     const updateAvailabilityOptions = Object.values(UpdateAvailabilityType);
 
     const onSubmit = (data: SearchFormType) => {
-        console.log(data)
+        console.log(data);
         onSearch(data);
     };
 
@@ -99,63 +101,72 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                             </Typography>
                         </Grid>
                         <Grid xs={6} sm={6}>
-                            <Controller
-                                name="areaLPList"
-                                control={control}
-                                render={({field: {onChange, ...field}}) => (
-                                    <Autocomplete
-                                        {...field}
-                                        multiple
-                                        size={size}
-                                        options={areaLPOptions}
-                                        renderInput={(params) => (
-                                            <TextField {...params} label="Area LP" placeholder="Area LP"/>
-                                        )}
-                                        onChange={(e, data) => onChange(data)}
-                                    />
-                                )}
-                            />
+                            {isLoading ?
+                                <Skeleton variant="rounded" height={skeletonHeight}/> :
+                                <Controller
+                                    name="areaLPList"
+                                    control={control}
+                                    render={({field: {onChange, ...field}}) => (
+                                        <Autocomplete
+                                            {...field}
+                                            multiple
+                                            size={size}
+                                            options={areaLPOptions}
+                                            renderInput={(params) => (
+                                                <TextField {...params} label="Area LP" placeholder="Area LP"/>
+                                            )}
+                                            onChange={(e, data) => onChange(data)}
+                                        />
+                                    )}
+                                />
+                            }
                         </Grid>
                         <Grid xs={6} sm={6}>
-                            <Controller
-                                name="areaLVList"
-                                control={control}
-                                render={({field: {onChange, ...field}}) => (
-                                    <Autocomplete
-                                        {...field}
-                                        multiple
-                                        size={size}
-                                        options={areaLVOptions || []}
-                                        renderInput={(params) => (
-                                            <TextField {...params} label="Area LV" placeholder="Area LV"/>
-                                        )}
-                                        onChange={(e, data) => onChange(data)}
-                                    />
-                                )}
-                            />
+                            {isLoading ?
+                                <Skeleton variant="rounded" height={skeletonHeight}/> :
+                                <Controller
+                                    name="areaLVList"
+                                    control={control}
+                                    render={({field: {onChange, ...field}}) => (
+                                        <Autocomplete
+                                            {...field}
+                                            multiple
+                                            size={size}
+                                            options={areaLVOptions || []}
+                                            renderInput={(params) => (
+                                                <TextField {...params} label="Area LV" placeholder="Area LV"/>
+                                            )}
+                                            onChange={(e, data) => onChange(data)}
+                                        />
+                                    )}
+                                />
+                            }
                         </Grid>
 
                         <Grid xs={12} sm={12}>
-                            <Controller
-                                name="projectNameList"
-                                control={control}
-                                render={({field: {onChange, ...field}}) => (
-                                    <Autocomplete
-                                        {...field}
-                                        {...getVirtualizedAutocompleteConfig()}
-                                        multiple
-                                        size={size}
-                                        renderOption={(props, option, state) =>
-                                            [props, option, state.index] as React.ReactNode
-                                        }
-                                        options={projectNameOptions}
-                                        renderInput={(params) => (
-                                            <TextField{...params} label="Project Name" placeholder="Project Name"/>
-                                        )}
-                                        onChange={(e, data) => onChange(data)}
-                                    />
-                                )}
-                            />
+                            {isLoading ?
+                                <Skeleton variant="rounded" height={skeletonHeight}/> :
+                                <Controller
+                                    name="projectNameList"
+                                    control={control}
+                                    render={({field: {onChange, ...field}}) => (
+                                        <Autocomplete
+                                            {...field}
+                                            {...getVirtualizedAutocompleteConfig()}
+                                            multiple
+                                            size={size}
+                                            renderOption={(props, option, state) =>
+                                                [props, option, state.index] as React.ReactNode
+                                            }
+                                            options={projectNameOptions}
+                                            renderInput={(params) => (
+                                                <TextField{...params} label="Project Name" placeholder="Project Name"/>
+                                            )}
+                                            onChange={(e, data) => onChange(data)}
+                                        />
+                                    )}
+                                />
+                            }
                         </Grid>
 
                         <Grid xs={6} sm={3}>
@@ -168,8 +179,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={postTypeOptions}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Post Type" placeholder="Post Type" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Post Type" placeholder="Post Type"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
@@ -186,8 +198,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={postFormTypeOptions}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Post From" placeholder="Post From" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Post From" placeholder="Post From"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
@@ -205,8 +218,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={bedRoomOptions}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Bedroom" placeholder="Bedroom" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Bedroom" placeholder="Bedroom"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         getOptionLabel={(option) => isNaN(Number(option)) ? option : (+option) > 2 ? `${option} Bedroom more` : `${option} Bedroom`}
                                         onChange={(e, data) => onChange(data)}
@@ -224,8 +238,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={bathroomOptions}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Bathroom" placeholder="Bathroom" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Bathroom" placeholder="Bathroom"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         getOptionLabel={(option) => `${option} Bathroom ${(+option) > 2 ? " more" : ""}`}
                                         onChange={(e, data) => onChange(data)}
@@ -283,26 +298,29 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                         </Grid>
 
                         <Grid xs={6} sm={6}>
-                            <Controller
-                                name="skuList"
-                                control={control}
-                                render={({field: {onChange, ...field}}) => (
-                                    <Autocomplete
-                                        {...field}
-                                        {...getVirtualizedAutocompleteConfig()}
-                                        multiple
-                                        size={size}
-                                        renderOption={(props, option, state) =>
-                                            [props, option, state.index] as React.ReactNode
-                                        }
-                                        options={skuOptions}
-                                        renderInput={(params) => (
-                                            <TextField{...params} label="LP Code" placeholder="LP Code"/>
-                                        )}
-                                        onChange={(e, data) => onChange(data)}
-                                    />
-                                )}
-                            />
+                            {isLoading ?
+                                <Skeleton variant="rounded" height={skeletonHeight}/> :
+                                <Controller
+                                    name="skuList"
+                                    control={control}
+                                    render={({field: {onChange, ...field}}) => (
+                                        <Autocomplete
+                                            {...field}
+                                            {...getVirtualizedAutocompleteConfig()}
+                                            multiple
+                                            size={size}
+                                            renderOption={(props, option, state) =>
+                                                [props, option, state.index] as React.ReactNode
+                                            }
+                                            options={skuOptions}
+                                            renderInput={(params) => (
+                                                <TextField{...params} label="LP Code" placeholder="LP Code"/>
+                                            )}
+                                            onChange={(e, data) => onChange(data)}
+                                        />
+                                    )}
+                                />
+                            }
                         </Grid>
                         <Grid xs={6} sm={6}>
                             <Controller
@@ -314,8 +332,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={propertyTypeOptions}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Property Type" placeholder="Property Type" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Property Type" placeholder="Property Type"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
@@ -337,8 +356,9 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         multiple
                                         size={size}
                                         options={availabilityOptions}
-                                        renderInput={({ inputProps, ...rest })=> (
-                                            <TextField {...rest} label="Availability" placeholder="Availability" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Availability" placeholder="Availability"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
@@ -354,8 +374,10 @@ export const SearchForm = ({properties, onSearch}: SearchFormProps) => {
                                         {...field}
                                         options={updateAvailabilityOptions}
                                         size={size}
-                                        renderInput={({ inputProps, ...rest }) => (
-                                            <TextField {...rest} label="Update Availability" placeholder="Update Availability" inputProps={{ ...inputProps, readOnly }}/>
+                                        renderInput={({inputProps, ...rest}) => (
+                                            <TextField {...rest} label="Update Availability"
+                                                       placeholder="Update Availability"
+                                                       inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />

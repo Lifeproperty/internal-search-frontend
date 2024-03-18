@@ -105,7 +105,7 @@ export default function Home() {
     return (
         <Container disableGutters={true}>
             <div className={"flex flex-col gap-2 mt-4"}>
-                <SearchForm properties={data || []} onSearch={searchHandler}/>
+                <SearchForm properties={data || []} onSearch={searchHandler} isLoading={isLoading}/>
                 <ListingTable rows={tableRows} isLoading={isLoading} lvIdList={lvIdList}/>
             </div>
         </Container>

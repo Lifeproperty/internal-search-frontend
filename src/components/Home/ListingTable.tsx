@@ -6,9 +6,8 @@ import {useMemo, useState} from "react";
 import {ListingDetail} from "@/components/Home/ListingDetail";
 import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
 import {useSnackbar} from "notistack";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import theme from "@/theme";
 import {DetailsMobile} from "@/components/Home/DetailsMobile";
+import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 
 interface ListingTableProps {
     rows: Property[];
@@ -17,12 +16,12 @@ interface ListingTableProps {
 }
 
 export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => {
-    const isMornThanSmScreen = useMediaQuery(theme.breakpoints.up("sm"));
+    const isDesktopScreen = useIsDesktopScreen();
     const {enqueueSnackbar} = useSnackbar();
     const [expanded, setExpanded] = useState<MRT_ExpandedState>({});
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
-        () => isMornThanSmScreen ? [
+        () => isDesktopScreen ? [
             {
                 header: "Image",
                 Cell: ({renderedCellValue, row}) => (
@@ -84,7 +83,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                     <DetailsMobile property={row.original}/>
                 ),
             }
-        ], [isMornThanSmScreen],
+        ], [isDesktopScreen],
     );
 
     const clickCopyHandler = async (text: string) => {
@@ -92,7 +91,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
     };
 
     const table = useMaterialReactTable({
-        enableStickyHeader: isMornThanSmScreen,
+        enableStickyHeader: isDesktopScreen,
         columns,
         enableColumnPinning: true,
         state: {
@@ -100,10 +99,10 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
             expanded
         },
         initialState: {
-           pagination: {
-               pageSize: 20,
-               pageIndex: 0
-           }
+            pagination: {
+                pageSize: 20,
+                pageIndex: 0
+            }
         },
         onExpandedChange: setExpanded,
         autoResetPageIndex: false, //don't reset the page index when data changes
