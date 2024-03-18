@@ -52,7 +52,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                 header: "Price",
                 size: 150,
                 filterVariant: "range",
-                Cell: ({cell}) => cell.getValue<number>().toLocaleString("en-US")
+                Cell: ({cell}) => cell.getValue<number>()?.toLocaleString("en-US")
             },
             {accessorKey: "areaSize", header: "Area Size", size: 150, filterVariant: "range"},
             {accessorKey: "floor", header: "Floor", size: 150},
