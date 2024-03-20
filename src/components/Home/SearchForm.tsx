@@ -110,6 +110,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         <Autocomplete
                                             {...field}
                                             multiple
+                                            disableCloseOnSelect
                                             size={size}
                                             options={areaLPOptions}
                                             renderInput={(params) => (
@@ -131,6 +132,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         <Autocomplete
                                             {...field}
                                             multiple
+                                            disableCloseOnSelect
                                             size={size}
                                             options={areaLVOptions || []}
                                             renderInput={(params) => (
@@ -154,6 +156,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                             {...field}
                                             {...getVirtualizedAutocompleteConfig()}
                                             multiple
+                                            disableCloseOnSelect
                                             size={size}
                                             renderOption={(props, option, state) =>
                                                 [props, option, state.index] as React.ReactNode
