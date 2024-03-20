@@ -1,10 +1,11 @@
 import Image from "next/image";
-import ImageIcon from "@mui/icons-material/Image";
+import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import useGetImagesFromSku from "@/hooks/useGetImagesFromSku";
 import {Dialog, DialogTitle, Skeleton} from "@mui/material";
 import {useState} from "react";
 import {AllImagesList} from "@/components/Home/AllImagesList";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
+import Typography from "@mui/material/Typography";
 
 
 interface ListingImageProps {
@@ -35,10 +36,13 @@ export const ListingImage = ({sku}: ListingImageProps) => {
                        onClick={() => setOpen(true)}
                        alt={"image"}/>
             ) : (
-                <div className={"flex flex-row gap-1 items-center h-[100px]"}>
-                    <ImageIcon/>
-                    No Image
+                <div className={"flex flex-row gap-1 items-center justify-center h-full"}>
+                    <ImageNotSupportedIcon/>
+                    <Typography>
+                        No Image
+                    </Typography>
                 </div>
+
             )}
 
             <Dialog onClose={() => setOpen(false)} open={open} maxWidth={"md"} fullWidth>
