@@ -69,8 +69,7 @@ export const PropertyDescription = ({property, onClickCopy}: PropertyDetailsProp
                 </div>
 
                 <div className={"mt-4"}>
-                    <Link href={lpUrl}
-                          target={"_blank"}>
+                    <Link href={lpUrl} target={"_blank"}>
                         {lpUrl}
                     </Link>
                 </div>
