@@ -14,11 +14,10 @@ import EditIcon from "@mui/icons-material/Edit";
 
 interface ListingTableProps {
     rows: Property[];
-    lvIdList?: LvId[];
     isLoading?: boolean;
 }
 
-export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => {
+export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const isDesktopScreen = useIsDesktopScreen();
     const {enqueueSnackbar} = useSnackbar();
     const [expanded, setExpanded] = useState<MRT_ExpandedState>({});
@@ -124,9 +123,8 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
         muiTableBodyCellProps: {sx: {paddingLeft: 1, paddingRight: 0, paddingTop: 1, paddingBottom: 1}},
         muiTableHeadCellProps: {sx: {paddingLeft: 1, paddingRight: 0, width: 0}},
         renderDetailPanel: ({row}) => {
-            const lvId = lvIdList?.find(lvId => lvId.sku === row.original.sku && lvId.type?.toLowerCase() === row.original.postType?.toLowerCase());
             return (
-                <ListingDetail property={row.original} onClickCopy={clickCopyHandler} lvId={lvId}/>
+                <ListingDetail property={row.original} onClickCopy={clickCopyHandler}/>
             );
         },
         renderRowActionMenuItems: ({closeMenu, row}) => [

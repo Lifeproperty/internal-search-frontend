@@ -8,11 +8,10 @@ import {PropertyStatus} from "@/components/Home/PropertyStatus";
 
 interface ListingDetailProps {
     property: Property;
-    lvId?: LvId;
     onClickCopy?: (text: string) => void;
 }
 
-export const ListingDetail = ({property, onClickCopy, lvId}: ListingDetailProps) => {
+export const ListingDetail = ({property, onClickCopy}: ListingDetailProps) => {
     const [value, setValue] = useState("1");
 
 
@@ -36,7 +35,7 @@ export const ListingDetail = ({property, onClickCopy, lvId}: ListingDetailProps)
             </Box>
 
             <TabPanel value="1" sx={{padding: 2}}>
-                <PropertyDescription property={property} onClickCopy={clickCopyHandler} lvId={lvId}/>
+                <PropertyDescription property={property} onClickCopy={clickCopyHandler}/>
             </TabPanel>
             <TabPanel value="2" sx={{padding: 2}}>
                 <PropertyContact property={property} onClickCopy={clickCopyHandler}/>
