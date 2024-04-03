@@ -49,9 +49,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                                 <TextField{...params} label="Project Name" placeholder="Project Name"/>
                             )}
                             onChange={(e, data) => onChange(data)}
-                            onKeyUp={(event) => {
-                                console.log((event.target as any).value);
-                            }}
+                            onKeyUp={(event) => onChange((event.target as any).value)}
                         />
                     )}
                 />
