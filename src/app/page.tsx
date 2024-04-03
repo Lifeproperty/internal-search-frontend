@@ -52,8 +52,8 @@ export default function Home() {
                         isMatch = isMatch && condition.bathroomList.includes(row.bathroom);
                     }
                 }
-                if (condition.postFormTypeList.length > 0) {
-                    isMatch = isMatch && condition.postFormTypeList.includes(row.postFrom);
+                if (condition.postFromTypeList.length > 0) {
+                    isMatch = isMatch && condition.postFromTypeList.includes(row.postFrom);
                 }
                 if (condition.areaLVList.length > 0) {
                     const splitAreaLV = row.areaLV.split(", ");

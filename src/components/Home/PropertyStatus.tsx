@@ -12,8 +12,8 @@ import {AvailabilityType} from "@/types/availability";
 import dayjs from "dayjs";
 import Typography from "@mui/material/Typography";
 import {useQueryClient} from "@tanstack/react-query";
-import {QueryKey} from "@/constants/queryKey";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
+import {updateOldCache} from "@/utils/propertyUtils";
 
 interface PropertyCommentProps {
     property: Property;
@@ -51,26 +51,12 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
         });
     };
 
-    const updateOldCache = (response: Property) => {
-        queryClient.setQueryData([QueryKey.GetAllListings], (oldData: Property[] | undefined) => {
-            if (oldData) {
-                return oldData.map((item) => {
-                    if (item.sku === property.sku && item.postType === property.postType) {
-                        return response;
-                    }
-                    return item;
-                });
-            }
-            return oldData;
-        });
-    };
-
     const onSubmit = async (data: FormValues) => {
         try {
             setIsLoading(true);
             const response = await updateListing(property.postType, property.sku, data);
             setSummitFromValue(data);
-            updateOldCache(response);
+            updateOldCache(queryClient, response);
             enqueueSnackbar("Comment updated", {variant: "success"});
         } catch (e) {
             enqueueSnackbar("Error updating comment", {variant: "error"});

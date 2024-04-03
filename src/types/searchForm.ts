@@ -1,4 +1,4 @@
-import {PostFormType, PostType, PropertyType, UpdateAvailabilityType} from "@/constants/property";
+import {PostFromType, PostType, PropertyType, UpdateAvailabilityType} from "@/constants/property";
 import {AvailabilityType} from "@/types/availability";
 
 export interface SearchFormType {
@@ -8,7 +8,7 @@ export interface SearchFormType {
     projectNameList: string[];
     propertyTypeList: PropertyType[];
     postTypeList: PostType[]
-    postFormTypeList: PostFormType[];
+    postFromTypeList: PostFromType[];
     availabilityList: AvailabilityType[];
     updateAvailability: UpdateAvailabilityType | null;
     bedRoomList: string[];

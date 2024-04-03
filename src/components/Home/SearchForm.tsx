@@ -19,11 +19,10 @@ import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import {PostFormType, PostType, PropertyType, UpdateAvailabilityType} from "@/constants/property";
 import SearchIcon from "@mui/icons-material/Search";
-import {AvailabilityType} from "@/types/availability";
 import {getUniqueValues} from "@/utils/valueUtils";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
+import {usePropertyOptions} from "@/hooks/usePropertyOptions";
 
 interface SearchFormProps {
     properties: Property[];
@@ -47,7 +46,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
             bathroomList: [],
             bedRoomList: [],
             projectNameList: [],
-            postFormTypeList: [],
+            postFromTypeList: [],
             availabilityList: [],
             updateAvailability: null,
             petAllowed: false,
@@ -58,16 +57,19 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
             maxAreaSize: null,
         }
     });
-    const skuOptions: string[] = getUniqueValues(properties?.map((property) => property.sku) || []);
-    const areaLPOptions: string[] = getUniqueValues(properties?.map((property) => property.areaLP) || []);
-    const projectNameOptions: string[] = getUniqueValues(properties?.map((property) => property.titleEN) || []);
-    const propertyTypeOptions: PropertyType[] = Object.values(PropertyType);
-    const postTypeOptions: PostType[] = Object.values(PostType);
-    const postFormTypeOptions: PostFormType[] = Object.values(PostFormType);
-    const bedRoomOptions = ["Studio", ...new Array(3).fill(0).map((_, index) => (index + 1).toString())];
-    const bathroomOptions = new Array(3).fill(0).map((_, index) => (index + 1).toString());
-    const availabilityOptions = Object.values(AvailabilityType);
-    const updateAvailabilityOptions = Object.values(UpdateAvailabilityType);
+
+    const {
+        skuOptions,
+        areaLPOptions,
+        projectNameOptions,
+        propertyTypeOptions,
+        postTypeOptions,
+        postFromTypeOptions,
+        bedRoomOptions,
+        bathroomOptions,
+        availabilityOptions,
+        updateAvailabilityOptions
+    } = usePropertyOptions(properties);
 
     const onSubmit = (data: SearchFormType) => {
         console.log(data);
@@ -193,14 +195,14 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                         </Grid>
                         <Grid xs={6} sm={3}>
                             <Controller
-                                name="postFormTypeList"
+                                name="postFromTypeList"
                                 control={control}
                                 render={({field: {onChange, ...field}}) => (
                                     <Autocomplete
                                         {...field}
                                         multiple
                                         size={size}
-                                        options={postFormTypeOptions}
+                                        options={postFromTypeOptions}
                                         renderInput={({inputProps, ...rest}) => (
                                             <TextField {...rest} label="Post From" placeholder="Post From"
                                                        inputProps={{...inputProps, readOnly}}/>

@@ -8,6 +8,9 @@ import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
 import {useSnackbar} from "notistack";
 import {DetailsMobile} from "@/components/Home/DetailsMobile";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
+import {PropertyFormDialog} from "@/components/Home/PropertyFormDialog";
+import {ListItemIcon, MenuItem} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 interface ListingTableProps {
     rows: Property[];
@@ -19,6 +22,13 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
     const isDesktopScreen = useIsDesktopScreen();
     const {enqueueSnackbar} = useSnackbar();
     const [expanded, setExpanded] = useState<MRT_ExpandedState>({});
+    const [selectedProperty, setSelectedProperty] = useState<Property>();
+    const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+
+    const openEditDialogHandler = (value: Property) => {
+        setSelectedProperty(value);
+        setOpenEditDialog(true);
+    };
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
         () => isDesktopScreen ? [
@@ -43,10 +53,10 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
             },
             {accessorKey: "sku", header: "SKU", size: 50},
             {accessorKey: "areaLP", header: "Area LP", size: 100},
-            {accessorKey: "areaLV", header: "Area LV", size: 200},
-            {accessorKey: "propertyType", header: "Property Type", size: 150},
-            {accessorKey: "postType", header: "Post Type", size: 150},
-            {accessorKey: "postFrom", header: "Post From", size: 150},
+            {accessorKey: "areaLV", header: "Area LV", size: 150},
+            {accessorKey: "propertyType", header: "Property Type", size: 100},
+            {accessorKey: "postType", header: "Post Type", size: 100},
+            {accessorKey: "postFrom", header: "Post From", size: 100},
             {
                 accessorKey: "price",
                 header: "Price",
@@ -54,7 +64,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                 filterVariant: "range",
                 Cell: ({cell}) => cell.getValue<number>()?.toLocaleString("en-US")
             },
-            {accessorKey: "areaSize", header: "Area Size", size: 150, filterVariant: "range"},
+            {accessorKey: "areaSize", header: "Area Size", size: 100, filterVariant: "range"},
             {accessorKey: "floor", header: "Floor", size: 150},
             {accessorKey: "bedroom", header: "Bedroom", size: 150},
             {accessorKey: "bathroom", header: "Bathroom", size: 150},
@@ -80,7 +90,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                 enableColumnActions: false,
                 minSize: 310,
                 Cell: ({renderedCellValue, row}) => (
-                    <DetailsMobile property={row.original}/>
+                    <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler}/>
                 ),
             }
         ], [isDesktopScreen],
@@ -94,6 +104,7 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
         enableStickyHeader: isDesktopScreen,
         columns,
         enableColumnPinning: true,
+        enableRowActions: isDesktopScreen,
         state: {
             isLoading,
             expanded
@@ -102,7 +113,10 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
             pagination: {
                 pageSize: 20,
                 pageIndex: 0
-            }
+            },
+            columnPinning: {
+                right: ["mrt-row-actions"],
+            },
         },
         onExpandedChange: setExpanded,
         autoResetPageIndex: false, //don't reset the page index when data changes
@@ -115,10 +129,29 @@ export const ListingTable = ({rows, isLoading, lvIdList}: ListingTableProps) => 
                 <ListingDetail property={row.original} onClickCopy={clickCopyHandler} lvId={lvId}/>
             );
         },
+        renderRowActionMenuItems: ({closeMenu, row}) => [
+            <MenuItem key={0}
+                      onClick={() => {
+                          openEditDialogHandler(row.original);
+                          closeMenu();
+                      }}
+                      sx={{m: 0}}
+            >
+                <ListItemIcon>
+                    <EditIcon/>
+                </ListItemIcon>
+                Edit
+            </MenuItem>,
+        ],
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
 
     return (
-        <MaterialReactTable table={table}/>
+        <>
+            <MaterialReactTable table={table}/>
+            {selectedProperty && (
+                <PropertyFormDialog property={selectedProperty} open={openEditDialog} setOpen={setOpenEditDialog}/>
+            )}
+        </>
     );
 };

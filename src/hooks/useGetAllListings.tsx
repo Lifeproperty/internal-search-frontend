@@ -5,7 +5,8 @@ import {QueryKey} from "@/constants/queryKey";
 const useGetAllListings = () => {
     return useQuery({
         queryKey: [QueryKey.GetAllListings],
-        queryFn: () => getAllListings()
+        queryFn: () => getAllListings(),
+        staleTime: Infinity,
     });
 };
 

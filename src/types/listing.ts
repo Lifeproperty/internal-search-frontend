@@ -1,4 +1,4 @@
-import {PostFormType, PostType, PropertyType} from "@/constants/property";
+import {PostFromType, PostType, PropertyType} from "@/constants/property";
 import {AvailabilityType} from "@/types/availability";
 
 export interface Property {
@@ -7,7 +7,7 @@ export interface Property {
     sku: string;
     propertyType: PropertyType;
     postType: PostType;
-    postFrom: PostFormType;
+    postFrom: PostFromType;
     titleTH: string;
     titleEN: string;
     price: number;
