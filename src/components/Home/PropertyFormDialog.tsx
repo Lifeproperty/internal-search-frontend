@@ -34,10 +34,15 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
     const onSubmit = async (data: Property) => {
         try {
             setIsLoading(true);
-            const response = await updateListing(data.postType, data.sku, data);
+            const payload: Property = {
+                ...data,
+                exclusive: data.exclusive ? "Exclusive" : "",
+                petAllowed: data.petAllowed ? "Allow" : ""
+            };
+            const response = await updateListing(data.postType, data.sku, payload);
             updateOldCache(queryClient, response);
             enqueueSnackbar("Update successfully", {variant: "success", autoHideDuration: 3000});
-            setOpen(false)
+            setOpen(false);
         } catch (e) {
             enqueueSnackbar("Error updating data", {variant: "error"});
         } finally {
