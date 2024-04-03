@@ -1,4 +1,4 @@
-import {LvId, Property} from "@/types/listing";
+import {Property} from "@/types/listing";
 import {Box, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {SyntheticEvent, useState} from "react";

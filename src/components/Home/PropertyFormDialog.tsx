@@ -22,7 +22,7 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
-    const {control, setValue, handleSubmit, register} = useForm<Property>({
+    const {control, handleSubmit, register} = useForm<Property>({
         values: property
     });
     const isDesktopScreen = useIsDesktopScreen();

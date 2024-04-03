@@ -1,5 +1,5 @@
 "use client";
-import {LvId, Property} from "@/types/listing";
+import {Property} from "@/types/listing";
 import {ListingImage} from "@/components/Home/ListingImage";
 import {MaterialReactTable, MRT_ColumnDef, MRT_ExpandedState, useMaterialReactTable} from "material-react-table";
 import {useMemo, useState} from "react";
@@ -33,7 +33,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         () => isDesktopScreen ? [
             {
                 header: "Image",
-                Cell: ({renderedCellValue, row}) => (
+                Cell: ({row}) => (
                     <ListingImage sku={row.original.sku}/>
                 ),
                 size: 120,
@@ -41,7 +41,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             {
                 accessorKey: "titleEN",
                 header: "Title", size: 160,
-                Cell: ({renderedCellValue, row}) => (
+                Cell: ({row}) => (
                     <div className={"flex flex-row items-center gap-2"}>
                         <AvailabilityDot value={row.original.availability}/>
                         <div>
@@ -88,7 +88,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 header: "Details",
                 enableColumnActions: false,
                 minSize: 310,
-                Cell: ({renderedCellValue, row}) => (
+                Cell: ({row}) => (
                     <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler}/>
                 ),
             }
