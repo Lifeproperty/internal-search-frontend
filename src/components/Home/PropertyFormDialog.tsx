@@ -2,7 +2,7 @@ import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} f
 import {Property} from "@/types/listing";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import * as React from "react";
-import {Dispatch, SetStateAction, useState} from "react";
+import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
 import {useForm} from "react-hook-form";
 import {PropertyForm} from "./PropertyForm";
@@ -22,13 +22,19 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
-    const {control, handleSubmit, register} = useForm<Property>({
-        values: property
-    });
+    const {control, handleSubmit, register, reset} = useForm<Property>();
     const isDesktopScreen = useIsDesktopScreen();
+
+    useEffect(() => {
+        reset(property);
+    }, [property]);
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const clickResetHandler = () => {
+        reset();
     };
 
     const onSubmit = async (data: Property) => {
@@ -77,7 +83,7 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
                 <PropertyForm property={property} control={control} register={register}/>
             </DialogContent>
             <DialogActions>
-                <Button disabled={isLoading} variant="outlined">Reset</Button>
+                <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>
                 <LoadingButton loading={isLoading} type={"submit"} variant="contained">
                     Update
                 </LoadingButton>

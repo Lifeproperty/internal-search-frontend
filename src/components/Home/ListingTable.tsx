@@ -25,7 +25,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
 
     const openEditDialogHandler = (value: Property) => {
-        setSelectedProperty(value);
+        setSelectedProperty({...value});
         setOpenEditDialog(true);
     };
 
