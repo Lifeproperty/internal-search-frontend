@@ -122,7 +122,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                     )}/>
             </Grid>
             <Grid xs={12}>
-                <Stack spacing={2} direction="row" justifyContent={"space-between"}>
+                <Stack spacing={2} direction="row" justifyContent={property.psCode ? "space-between" : "end"}>
                     {property.psCode && (
                         <LoadingButton loading={isFetchLoading} onClick={clickFetchHandler}
                                        variant="contained">Refresh</LoadingButton>
