@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import {useQueryClient} from "@tanstack/react-query";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {updateOldCache} from "@/utils/propertyUtils";
+import {getAvailableFromPsCode} from "@/services/psApi";
 
 interface PropertyCommentProps {
     property: Property;
@@ -25,17 +26,18 @@ interface FormValues {
 }
 
 export const PropertyStatus = ({property}: PropertyCommentProps) => {
-    const isDesktopScreen = useIsDesktopScreen()
+    const isDesktopScreen = useIsDesktopScreen();
     const readOnly = !isDesktopScreen;
     const size = isDesktopScreen ? "medium" : "small";
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isFetchLoading, setIsFetchLoading] = useState<boolean>(false);
     const [summitFromValue, setSummitFromValue] = useState<FormValues>({
         comment: property.comment,
         availability: property.availability
     });
     const {enqueueSnackbar} = useSnackbar();
-    const {control, register, handleSubmit, reset} = useForm<FormValues>({
+    const {control, handleSubmit, reset, setValue} = useForm<FormValues>({
         defaultValues: {
             comment: property.comment,
             availability: property.availability
@@ -65,50 +67,72 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
         }
     };
 
+    const clickFetchHandler = async () => {
+        try {
+            setIsFetchLoading(true);
+            const response = await getAvailableFromPsCode(property.psCode);
+            setValue("availability", response.availability);
+            setValue("comment", response.comment);
+            enqueueSnackbar("Fetch availability", {variant: "success"});
+        } catch (e) {
+            enqueueSnackbar("Error fetch Availability", {variant: "error"});
+        } finally {
+            setIsFetchLoading(false);
+        }
+    };
+
     return (
-        <>
-            <Grid component="form" className={"max-w-[calc(100vw-48px)] md:max-w-[600px]"}
-                  onSubmit={handleSubmit(onSubmit)}
-                  container spacing={2}>
-                <Grid xs={12}>
-                    <Controller
-                        name="availability"
-                        control={control}
-                        render={({field: {onChange, ...field}}) => (
-                            <Autocomplete
-                                {...field}
-                                size={size}
-                                options={availableOptions}
-                                renderInput={({inputProps, ...rest}) => (
-                                    <TextField {...rest} label="Availability" inputProps={{...inputProps, readOnly}}/>
-                                )}
-                                onChange={(e, data) => onChange(data)}
-                            />
-                        )}
-                    />
-                </Grid>
-                <Grid xs={12}>
-                    <Typography>
-                        Update Availability: {updateAvailabilityText}
-                    </Typography>
-                </Grid>
-                <Grid xs={12}>
-                    <TextField {...register("comment",)}
-                               rows={6}
-                               multiline
-                               size={size}
-                               label="Comments"
-                               variant="outlined"
-                               fullWidth/>
-                </Grid>
-                <Grid xs={12}>
+        <Grid component="form" className={"max-w-[calc(100vw-48px)] md:max-w-[600px]"}
+              onSubmit={handleSubmit(onSubmit)}
+              container spacing={2}>
+            <Grid xs={12}>
+                <Controller
+                    name="availability"
+                    control={control}
+                    render={({field: {onChange, ...field}}) => (
+                        <Autocomplete
+                            {...field}
+                            size={size}
+                            options={availableOptions}
+                            renderInput={({inputProps, ...rest}) => (
+                                <TextField {...rest} label="Availability" inputProps={{...inputProps, readOnly}}/>
+                            )}
+                            onChange={(e, data) => onChange(data)}
+                        />
+                    )}
+                />
+            </Grid>
+            <Grid xs={12}>
+                <Typography>
+                    Update Availability: {updateAvailabilityText}
+                </Typography>
+            </Grid>
+            <Grid xs={12}>
+                <Controller
+                    name="comment"
+                    control={control}
+                    render={({field}) => (
+                        <TextField {...field}
+                                   rows={6}
+                                   multiline
+                                   size={size}
+                                   label="Comments"
+                                   variant="outlined"
+                                   fullWidth/>
+                    )}/>
+            </Grid>
+            <Grid xs={12}>
+                <Stack spacing={2} direction="row" justifyContent={"space-between"}>
+                    {property.psCode && (
+                        <LoadingButton loading={isFetchLoading} onClick={clickFetchHandler}
+                                       variant="contained">Refresh</LoadingButton>
+                    )}
                     <Stack spacing={2} direction="row" justifyContent={"end"}>
                         <Button disabled={isLoading} variant="outlined" onClick={resetHandler}>Reset</Button>
                         <LoadingButton loading={isLoading} type={"submit"} variant="contained">Save</LoadingButton>
                     </Stack>
-                </Grid>
+                </Stack>
             </Grid>
-        </>
-
+        </Grid>
     );
 };
