@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 
 interface PropertyFormProps {
     register: UseFormRegister<Property>;
-    control: Control<Property, any, Property>;
+    control: Control<Property, Property>;
     property: Property;
 }
 
@@ -157,10 +157,10 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                         )}
                     />
                 </Grid>
-                <Grid xs={12} >
-                   <Typography>
-                       Last Updated: {updateAvailabilityText}
-                   </Typography>
+                <Grid xs={12}>
+                    <Typography>
+                        Last Updated: {updateAvailabilityText}
+                    </Typography>
                 </Grid>
             </Grid>
         </Grid>
