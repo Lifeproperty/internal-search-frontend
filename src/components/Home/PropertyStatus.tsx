@@ -14,7 +14,6 @@ import Typography from "@mui/material/Typography";
 import {useQueryClient} from "@tanstack/react-query";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {updateOldCache} from "@/utils/propertyUtils";
-import {getAvailableFromPsCode} from "@/services/psApi";
 
 interface PropertyCommentProps {
     property: Property;
@@ -31,13 +30,12 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
     const size = isDesktopScreen ? "medium" : "small";
     const queryClient = useQueryClient();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [isFetchLoading, setIsFetchLoading] = useState<boolean>(false);
     const [summitFromValue, setSummitFromValue] = useState<FormValues>({
         comment: property.comment,
         availability: property.availability
     });
     const {enqueueSnackbar} = useSnackbar();
-    const {control, handleSubmit, reset, setValue} = useForm<FormValues>({
+    const {control, handleSubmit, reset} = useForm<FormValues>({
         defaultValues: {
             comment: property.comment,
             availability: property.availability
@@ -64,20 +62,6 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
             enqueueSnackbar("Error updating comment", {variant: "error"});
         } finally {
             setIsLoading(false);
-        }
-    };
-
-    const clickFetchHandler = async () => {
-        try {
-            setIsFetchLoading(true);
-            const response = await getAvailableFromPsCode(property.psCode);
-            setValue("availability", response.availability);
-            setValue("comment", response.comment);
-            enqueueSnackbar("Fetch availability", {variant: "success"});
-        } catch (e) {
-            enqueueSnackbar("Error fetch Availability", {variant: "error"});
-        } finally {
-            setIsFetchLoading(false);
         }
     };
 
@@ -123,10 +107,6 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
             </Grid>
             <Grid xs={12}>
                 <Stack spacing={2} direction="row" justifyContent={property.psCode ? "space-between" : "end"}>
-                    {property.psCode && (
-                        <LoadingButton loading={isFetchLoading} onClick={clickFetchHandler}
-                                       variant="contained">Refresh</LoadingButton>
-                    )}
                     <Stack spacing={2} direction="row" justifyContent={"end"}>
                         <Button disabled={isLoading} variant="outlined" onClick={resetHandler}>Reset</Button>
                         <LoadingButton loading={isLoading} type={"submit"} variant="contained">Save</LoadingButton>
