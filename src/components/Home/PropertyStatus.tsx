@@ -106,7 +106,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                     )}/>
             </Grid>
             <Grid xs={12}>
-                <Stack spacing={2} direction="row" justifyContent={property.psCode ? "space-between" : "end"}>
+                <Stack spacing={2} direction="row" justifyContent={"end"}>
                     <Stack spacing={2} direction="row" justifyContent={"end"}>
                         <Button disabled={isLoading} variant="outlined" onClick={resetHandler}>Reset</Button>
                         <LoadingButton loading={isLoading} type={"submit"} variant="contained">Save</LoadingButton>
