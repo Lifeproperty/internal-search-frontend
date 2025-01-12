@@ -16,9 +16,16 @@ export default function Home() {
 
     useEffect(() => {
         const customSort = (a: Property, b: Property) => {
-            const numA = parseInt(a.sku.split('-')[1], 10);
-            const numB = parseInt(b.sku.split('-')[1], 10);
-            return numA - numB;
+            // Extract the alphabetic prefix and numeric part of the SKU
+            const [prefixA, numA] = a.sku.split('-');
+            const [prefixB, numB] = b.sku.split('-');
+
+            // Compare the prefixes first
+            if (prefixA < prefixB) return -1;
+            if (prefixA > prefixB) return 1;
+
+            // If prefixes are the same, compare the numeric part as numbers
+            return parseInt(numA, 10) - parseInt(numB, 10);
         };
 
         if (condition) {
