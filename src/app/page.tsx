@@ -15,6 +15,12 @@ export default function Home() {
     const [tableRows, setTableRows] = useState<Property[]>([]);
 
     useEffect(() => {
+        const customSort = (a: Property, b: Property) => {
+            const numA = parseInt(a.sku.split('-')[1], 10);
+            const numB = parseInt(b.sku.split('-')[1], 10);
+            return numA - numB;
+        };
+
         if (condition) {
             const filteredRows = data?.filter((row) => {
                 let isMatch = true;
@@ -91,11 +97,11 @@ export default function Home() {
                 return isMatch;
             });
             // setTableRows(filteredRows || []);
-            const sortedRows = filteredRows?.sort((a, b) => a.sku.localeCompare(b.sku));
+            const sortedRows = filteredRows?.sort(customSort);
             setTableRows(sortedRows || []);
         } else {
             // setTableRows(data || []);
-            const sortedData = data?.sort((a, b) => a.sku.localeCompare(b.sku));
+            const sortedData = data?.sort(customSort);
             setTableRows(sortedData || []);
         }
     }, [condition, data]);
