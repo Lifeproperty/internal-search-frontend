@@ -90,9 +90,13 @@ export default function Home() {
                 }
                 return isMatch;
             });
-            setTableRows(filteredRows || []);
+            // setTableRows(filteredRows || []);
+            const sortedRows = filteredRows?.sort((a, b) => a.sku.localeCompare(b.sku));
+            setTableRows(sortedRows || []);
         } else {
-            setTableRows(data || []);
+            // setTableRows(data || []);
+            const sortedData = data?.sort((a, b) => a.sku.localeCompare(b.sku));
+            setTableRows(sortedData || []);
         }
     }, [condition, data]);
 
