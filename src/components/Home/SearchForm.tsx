@@ -138,7 +138,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                             size={size}
                                             options={areaLVOptions || []}
                                             renderInput={(params) => (
-                                                <TextField {...params} label="Area LV" placeholder="Area LV"/>
+                                                <TextField {...params} label="Area Group" placeholder="Area LV"/>
                                             )}
                                             onChange={(e, data) => onChange(data)}
                                         />
