@@ -17,8 +17,8 @@ export default function Home() {
     useEffect(() => {
         const customSort = (a: Property, b: Property) => {
             // Extract the alphabetic prefix and numeric part of the SKU
-            const [prefixA, numA] = a.sku.split('-');
-            const [prefixB, numB] = b.sku.split('-');
+            const [prefixA, numA] = a.sku.split("-");
+            const [prefixB, numB] = b.sku.split("-");
 
             // Compare the prefixes first
             if (prefixA < prefixB) return -1;
@@ -100,6 +100,9 @@ export default function Home() {
                     } else {
                         return false;
                     }
+                }
+                if (condition.tel) {
+                    isMatch = isMatch && row.tel?.replace(/\D/g, "").includes(condition.tel.replace(/\D/g, ""));
                 }
                 return isMatch;
             });

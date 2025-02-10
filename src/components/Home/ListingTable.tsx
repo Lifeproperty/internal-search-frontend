@@ -11,6 +11,8 @@ import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {PropertyFormDialog} from "@/components/Home/PropertyFormDialog";
 import {ListItemIcon, MenuItem} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import {DeleteDialog} from "@/components/Home/DeleteDialog";
 
 interface ListingTableProps {
     rows: Property[];
@@ -23,11 +25,18 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const [expanded, setExpanded] = useState<MRT_ExpandedState>({});
     const [selectedProperty, setSelectedProperty] = useState<Property>();
     const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
+    const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+
 
     const openEditDialogHandler = (value: Property) => {
         setSelectedProperty({...value});
         setOpenEditDialog(true);
     };
+
+    const openDeleteDialogHandler = (value: Property) => {
+        setSelectedProperty({...value});
+        setOpenDeleteDialog(true);
+    }
 
     const columns = useMemo<MRT_ColumnDef<Property>[]>(
         () => isDesktopScreen ? [
@@ -89,7 +98,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 enableColumnActions: false,
                 minSize: 310,
                 Cell: ({row}) => (
-                    <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler}/>
+                    <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler} onClickDelete={openDeleteDialogHandler}/>
                 ),
             }
         ], [isDesktopScreen],
@@ -104,6 +113,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         columns,
         enableColumnPinning: true,
         enableRowActions: isDesktopScreen,
+        enableGlobalFilter: isDesktopScreen,
         state: {
             isLoading,
             expanded
@@ -140,6 +150,18 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 </ListItemIcon>
                 Edit
             </MenuItem>,
+            <MenuItem key={0}
+                      onClick={() => {
+                          openDeleteDialogHandler(row.original);
+                          closeMenu();
+                      }}
+                      sx={{m: 0}}
+            >
+                <ListItemIcon>
+                    <DeleteIcon/>
+                </ListItemIcon>
+                Delete
+            </MenuItem>,
         ],
         data: rows, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
     });
@@ -147,9 +169,11 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     return (
         <>
             <MaterialReactTable table={table}/>
-            {selectedProperty && (
+            {selectedProperty && <>
                 <PropertyFormDialog property={selectedProperty} open={openEditDialog} setOpen={setOpenEditDialog}/>
-            )}
+                <DeleteDialog property={selectedProperty} open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+            </>
+            }
         </>
     );
 };

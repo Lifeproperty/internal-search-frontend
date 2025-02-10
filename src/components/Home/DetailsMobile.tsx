@@ -4,16 +4,22 @@ import Typography from "@mui/material/Typography";
 import {Property} from "@/types/listing";
 import { IconButton } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface DetailsMobileProps {
     property: Property;
     onClickEdit: (value: Property) => void;
+    onClickDelete: (value: Property) => void;
 }
 
-export const DetailsMobile = ({property, onClickEdit}: DetailsMobileProps) => {
+export const DetailsMobile = ({property, onClickEdit, onClickDelete}: DetailsMobileProps) => {
 
     const clickEditButtonHandler = () =>  {
         onClickEdit(property)
+    }
+
+    const clickDeleteButtonHandler = () =>  {
+        onClickDelete(property)
     }
 
     return (
@@ -33,6 +39,9 @@ export const DetailsMobile = ({property, onClickEdit}: DetailsMobileProps) => {
                         <div className={"pr-2"}>
                             <IconButton aria-label="edit" onClick={clickEditButtonHandler}>
                                 <EditIcon/>
+                            </IconButton>
+                            <IconButton aria-label="edit" onClick={clickDeleteButtonHandler}>
+                                <DeleteIcon/>
                             </IconButton>
                         </div>
                     </div>

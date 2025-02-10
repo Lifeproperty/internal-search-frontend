@@ -19,4 +19,5 @@ export interface SearchFormType {
     maxAreaSize: number | null;
     petAllowed: boolean;
     exclusive: boolean;
+    tel: string | null;
 }

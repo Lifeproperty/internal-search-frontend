@@ -55,6 +55,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
             maxPrice: null,
             minAreaSize: null,
             maxAreaSize: null,
+            tel: null
         }
     });
 
@@ -72,7 +73,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
     } = usePropertyOptions(properties);
 
     const onSubmit = (data: SearchFormType) => {
-        console.log(data);
         onSearch(data);
     };
 
@@ -388,6 +388,16 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                     />
                                 )}
                             />
+                        </Grid>
+                        <Grid xs={6} sm={3}>
+                            <TextField {...register("tel")}
+                                       label="Tel"
+                                       variant="outlined"
+                                       size={size}
+                                       fullWidth/>
+                        </Grid>
+                        <Grid xs={6} sm={3}>
+
                         </Grid>
                         <Grid xs={6} sm={3} md={2} className={"flex item-center"}>
                             <Controller

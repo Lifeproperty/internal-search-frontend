@@ -132,6 +132,11 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
 
                 </Grid>
                 <Grid xs={6}>
+                    <TextField {...register("areaSize", {valueAsNumber: true})}
+                               label="Area Size"
+                               variant="outlined"
+                               size={size}
+                               fullWidth/>
 
                 </Grid>
 

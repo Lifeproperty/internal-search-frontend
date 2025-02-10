@@ -15,3 +15,12 @@ export const updateOldCache = (queryClient: QueryClient, response: Property) => 
         return oldData;
     });
 };
+
+export const deleteOldCache = (queryClient: QueryClient, sku: string, postType: string) => {
+    queryClient.setQueryData([QueryKey.GetAllListings], (oldData: Property[] | undefined) => {
+        if (oldData) {
+            return oldData.filter((item) => item.sku !== sku || item.postType !== postType);
+        }
+        return oldData;
+    });
+};
