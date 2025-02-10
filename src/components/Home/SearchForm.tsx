@@ -362,7 +362,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         size={size}
                                         options={availabilityOptions}
                                         renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Availability" placeholder="Availability"
+                                            <TextField {...rest} label="Status" placeholder="Status"
                                                        inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
@@ -380,8 +380,8 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         options={updateAvailabilityOptions}
                                         size={size}
                                         renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Update Availability"
-                                                       placeholder="Update Availability"
+                                            <TextField {...rest} label="Update Status"
+                                                       placeholder="Update Status"
                                                        inputProps={{...inputProps, readOnly}}/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
