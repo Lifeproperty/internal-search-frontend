@@ -79,7 +79,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                             size={size}
                             options={availableOptions}
                             renderInput={({inputProps, ...rest}) => (
-                                <TextField {...rest} label="Availability" inputProps={{...inputProps, readOnly}}/>
+                                <TextField {...rest} label="Status" inputProps={{...inputProps, readOnly}}/>
                             )}
                             onChange={(e, data) => onChange(data)}
                         />
@@ -88,7 +88,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
             </Grid>
             <Grid xs={12}>
                 <Typography>
-                    Update Availability: {updateAvailabilityText}
+                    Update Status: {updateAvailabilityText}
                 </Typography>
             </Grid>
             <Grid xs={12}>

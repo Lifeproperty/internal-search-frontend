@@ -90,7 +90,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             {accessorKey: "externalDataSource", header: "External Data Source", size: 150},
             {accessorKey: "feedbackChecked", header: "Feedback Checked", size: 150},
             {accessorKey: "listedOn", header: "Listed On", size: 150},
-            {accessorKey: "availability", header: "Availability", size: 150},
+            {accessorKey: "availability", header: "Status", size: 150},
             {accessorKey: "psCode", header: "PS Code", size: 150},
         ] : [
             {
