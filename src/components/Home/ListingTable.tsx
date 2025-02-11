@@ -111,7 +111,10 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const table = useMaterialReactTable({
         enableStickyHeader: isDesktopScreen,
         columns,
-        enableColumnPinning: true,
+        enableColumnPinning: isDesktopScreen,
+        enableDensityToggle: isDesktopScreen,
+        enableHiding: isDesktopScreen,
+        enableFilters: isDesktopScreen,
         enableRowActions: isDesktopScreen,
         enableGlobalFilter: isDesktopScreen,
         state: {
