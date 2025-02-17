@@ -54,7 +54,6 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
     const onSubmit = async (data: FormValues) => {
         try {
             setIsLoading(true);
-            console.log(property);
             const response = await updateListing(property.postType, property.sku, data);
             setSummitFromValue(data);
             updateOldCache(queryClient, response);
