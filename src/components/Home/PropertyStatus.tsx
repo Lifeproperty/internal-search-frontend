@@ -2,7 +2,7 @@ import {Autocomplete, Stack, TextField} from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/system/Unstable_Grid";
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";
 import {Controller, useForm} from "react-hook-form";
 import {updateListing} from "@/services/listingsApi";
@@ -54,6 +54,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
     const onSubmit = async (data: FormValues) => {
         try {
             setIsLoading(true);
+            console.log(property);
             const response = await updateListing(property.postType, property.sku, data);
             setSummitFromValue(data);
             updateOldCache(queryClient, response);
@@ -64,6 +65,13 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        reset({
+            comment: property.comment,
+            availability: property.availability
+        })
+    }, [property]);
 
     return (
         <Grid component="form" className={"max-w-[calc(100vw-48px)] md:max-w-[600px]"}
