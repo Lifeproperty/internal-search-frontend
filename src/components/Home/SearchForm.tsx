@@ -20,7 +20,6 @@ import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizati
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import SearchIcon from "@mui/icons-material/Search";
-import {getUniqueValues} from "@/utils/valueUtils";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {usePropertyOptions} from "@/hooks/usePropertyOptions";
 
@@ -35,7 +34,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
     const size = isDesktopScreen ? "medium" : "small";
     const skeletonHeight = size === "medium" ? 56 : 40;
     const readOnly = !isDesktopScreen;
-    const areaLVOptions = getUniqueValues(properties.map(property => property.areaLV?.split(",").map(value => value.trim())).flat() || []);
     const {control, register, handleSubmit, reset} = useForm<SearchFormType>({
         defaultValues: {
             areaLPList: [],
@@ -62,6 +60,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
     const {
         skuOptions,
         areaLPOptions,
+        areaLVOptions,
         projectNameOptions,
         propertyTypeOptions,
         postTypeOptions,

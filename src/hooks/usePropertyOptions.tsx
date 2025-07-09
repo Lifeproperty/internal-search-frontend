@@ -5,7 +5,8 @@ import {AvailabilityType} from "@/types/availability";
 
 export const usePropertyOptions = (properties: Property[]) => {
     const skuOptions: string[] = getUniqueValues(properties?.map((property) => property.sku) || []);
-    const areaLPOptions: string[] = getUniqueValues(properties?.map((property) => property.areaLP) || []);
+    const areaLPOptions: string[] = getUniqueValues(properties?.map((property) => property.areaLP).filter(Boolean) || []);
+    const areaLVOptions = getUniqueValues(properties.map(property => property.areaLV?.split(",").map(value => value.trim())).flat().filter(Boolean) || []);
     const projectNameOptions: string[] = getUniqueValues(properties?.map((property) => property.titleEN) || []);
     const propertyTypeOptions: PropertyType[] = Object.values(PropertyType);
     const postTypeOptions: PostType[] = Object.values(PostType);
@@ -18,6 +19,7 @@ export const usePropertyOptions = (properties: Property[]) => {
     return {
         skuOptions,
         areaLPOptions,
+        areaLVOptions,
         projectNameOptions,
         propertyTypeOptions,
         postTypeOptions,

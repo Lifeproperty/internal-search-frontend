@@ -28,6 +28,11 @@ export const getImagesFromSku = async (sku: string, limit?: number) => {
     return response.data.files;
 };
 
+export const createListing = async (data: Property) => {
+    const response = await authAxios().post<{ data: Property }>(baseListingsUrl, data);
+    return response.data.data;
+};
+
 export const updateListing = async (postType: string, sku: string, data: Partial<Property>) => {
     const response = await authAxios().patch<{ data: Property }>(`${baseListingsUrl}/${postType}/${sku}`, data);
     return response.data.data;

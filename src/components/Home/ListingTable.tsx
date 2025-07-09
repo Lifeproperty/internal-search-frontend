@@ -9,9 +9,11 @@ import {useSnackbar} from "notistack";
 import {DetailsMobile} from "@/components/Home/DetailsMobile";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {PropertyFormDialog} from "@/components/Home/PropertyFormDialog";
-import {ListItemIcon, MenuItem} from "@mui/material";
+import {PropertyAddDialog} from "@/components/Home/PropertyAddDialog";
+import {ListItemIcon, MenuItem, Button} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import AddIcon from "@mui/icons-material/Add";
 import {DeleteDialog} from "@/components/Home/DeleteDialog";
 
 interface ListingTableProps {
@@ -26,6 +28,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     const [selectedProperty, setSelectedProperty] = useState<Property>();
     const [openEditDialog, setOpenEditDialog] = useState<boolean>(false);
     const [openDeleteDialog, setOpenDeleteDialog] = useState<boolean>(false);
+    const [openAddDialog, setOpenAddDialog] = useState<boolean>(false);
 
 
     const openEditDialogHandler = (value: Property) => {
@@ -117,6 +120,16 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         enableFilters: isDesktopScreen,
         enableRowActions: isDesktopScreen,
         enableGlobalFilter: isDesktopScreen,
+        renderTopToolbarCustomActions: () => (
+            <Button
+                variant="contained"
+                startIcon={<AddIcon />}
+                onClick={() => setOpenAddDialog(true)}
+                disabled={isLoading}
+            >
+                Add Listing
+            </Button>
+        ),
         state: {
             isLoading,
             expanded
@@ -172,6 +185,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
     return (
         <>
             <MaterialReactTable table={table}/>
+            <PropertyAddDialog open={openAddDialog} setOpen={setOpenAddDialog}/>
             {selectedProperty && <>
                 <PropertyFormDialog property={selectedProperty} open={openEditDialog} setOpen={setOpenEditDialog}/>
                 <DeleteDialog property={selectedProperty} open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
