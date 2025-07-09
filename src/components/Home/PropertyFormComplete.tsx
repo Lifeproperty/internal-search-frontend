@@ -1,6 +1,9 @@
 import {Property} from "@/types/listing";
 import {AvailabilityType} from "@/types/availability";
 import {Autocomplete, Checkbox, FormControlLabel, TextField, Grid, Typography, Divider, Box} from "@mui/material";
+import {DatePicker} from "@mui/x-date-pickers/DatePicker";
+import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
+import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {Control, Controller, UseFormRegister} from "react-hook-form";
 import * as React from "react";
@@ -8,6 +11,7 @@ import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizati
 import {usePropertyOptions} from "@/hooks/usePropertyOptions";
 import useGetAllListings from "@/hooks/useGetAllListings";
 import {SkuInput} from "./SkuInput";
+import dayjs from "dayjs";
 
 interface PropertyFormCompleteProps {
     register: UseFormRegister<Property>;
@@ -79,7 +83,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
                                 options={areaLVOptions}
                                 value={currentValues}
                                 renderInput={(params) => (
-                                    <TextField {...params} label="Area LV" placeholder="Area LV"/>
+                                    <TextField {...params} label="Area Group" placeholder="Area Group"/>
                                 )
                                 }
                                 onChange={(e, newValue) => {
@@ -248,12 +252,30 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
 
             {/* Building Year */}
             <Grid size={{xs: 12, sm: 6}}>
-                <TextField {...register("buildingYear", {valueAsNumber: true})}
-                           type="number"
-                           label="Building Year"
-                           variant="outlined"
-                           size={size}
-                           fullWidth/>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Controller
+                        name="buildingYear"
+                        control={control}
+                        render={({field: {onChange, value, ...field}}) => (
+                            <DatePicker
+                                {...field}
+                                label="Building Year"
+                                views={['year']}
+                                value={value ? dayjs().year(value) : null}
+                                onChange={(newValue) => {
+                                    onChange(newValue ? newValue.year() : null);
+                                }}
+                                slotProps={{
+                                    textField: {
+                                        size: size,
+                                        fullWidth: true,
+                                        variant: "outlined"
+                                    }
+                                }}
+                            />
+                        )}
+                    />
+                </LocalizationProvider>
             </Grid>
 
             {/* CONTACT INFORMATION SECTION */}
@@ -355,15 +377,29 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
 
             {/* Listed On */}
             <Grid size={{xs: 12, sm: 6}}>
-                <TextField {...register("listedOn")}
-                           type="date"
-                           label="Listed On"
-                           variant="outlined"
-                           size={size}
-                           fullWidth
-                           InputLabelProps={{
-                               shrink: true,
-                           }}/>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <Controller
+                        name="listedOn"
+                        control={control}
+                        render={({field: {onChange, value, ...field}}) => (
+                            <DatePicker
+                                {...field}
+                                label="Listed On"
+                                value={value ? dayjs(value) : null}
+                                onChange={(newValue) => {
+                                    onChange(newValue ? newValue.format('YYYY-MM-DD') : '');
+                                }}
+                                slotProps={{
+                                    textField: {
+                                        size: size,
+                                        fullWidth: true,
+                                        variant: "outlined"
+                                    }
+                                }}
+                            />
+                        )}
+                    />
+                </LocalizationProvider>
             </Grid>
 
             {/* External Data Source */}
