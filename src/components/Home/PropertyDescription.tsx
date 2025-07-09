@@ -30,7 +30,7 @@ export const PropertyDescription = ({property, onClickCopy}: PropertyDetailsProp
                     endIcon={<ContentCopyIcon/>}>
                 Copy
             </Button>
-            <Typography>
+            <Typography component="div">
                 <div>
                     {`[${property.postType}] ${property.titleEN} (${property.sku})`}
                 </div>

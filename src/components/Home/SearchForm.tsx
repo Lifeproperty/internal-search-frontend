@@ -9,13 +9,13 @@ import {
     FormControlLabel,
     Skeleton,
     Stack,
-    TextField
+    TextField,
+    Grid
 } from "@mui/material";
 import {Controller, useForm} from "react-hook-form";
 import {SearchFormType} from "@/types/searchForm";
 import {Property} from "@/types/listing";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -96,12 +96,12 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
             <AccordionDetails>
                 <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate sx={{mt: 1}}>
                     <Grid container spacing={2}>
-                        <Grid xs={12}>
+                        <Grid size={12}>
                             <Typography fontWeight={500}>
                                 Property Information
                             </Typography>
                         </Grid>
-                        <Grid xs={6} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             {isLoading ?
                                 <Skeleton variant="rounded" height={skeletonHeight}/> :
                                 <Controller
@@ -123,7 +123,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                 />
                             }
                         </Grid>
-                        <Grid xs={6} sm={6}>
+                        <Grid size={{ xs: 12, sm: 6 }}>
                             {isLoading ?
                                 <Skeleton variant="rounded" height={skeletonHeight}/> :
                                 <Controller
@@ -146,7 +146,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             }
                         </Grid>
 
-                        <Grid xs={12} sm={12}>
+                        <Grid size={12}>
                             {isLoading ?
                                 <Skeleton variant="rounded" height={skeletonHeight}/> :
                                 <Controller
@@ -173,7 +173,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             }
                         </Grid>
 
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="postTypeList"
                                 control={control}
@@ -183,16 +183,16 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={postTypeOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Post Type" placeholder="Post Type"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Post Type" placeholder="Post Type"/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
                                 )}
                             />
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="postFromTypeList"
                                 control={control}
@@ -202,9 +202,9 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={postFromTypeOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Post From" placeholder="Post From"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Post From" placeholder="Post From"/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
@@ -212,7 +212,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             />
                         </Grid>
 
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="bedRoomList"
                                 control={control}
@@ -222,9 +222,9 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={bedRoomOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Bedroom" placeholder="Bedroom"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Bedroom" placeholder="Bedroom"/>
                                         )}
                                         getOptionLabel={(option) => isNaN(Number(option)) ? option : (+option) > 2 ? `${option} Bedroom more` : `${option} Bedroom`}
                                         onChange={(e, data) => onChange(data)}
@@ -232,7 +232,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                 )}
                             />
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="bathroomList"
                                 control={control}
@@ -242,9 +242,9 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={bathroomOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Bathroom" placeholder="Bathroom"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Bathroom" placeholder="Bathroom"/>
                                         )}
                                         getOptionLabel={(option) => `${option} Bathroom ${(+option) > 2 ? " more" : ""}`}
                                         onChange={(e, data) => onChange(data)}
@@ -253,13 +253,13 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             />
                         </Grid>
 
-                        <Grid container xs={12} sm={6}>
-                            <Grid xs={12}>
+                        <Grid container size={{ xs: 12, sm: 6 }}>
+                            <Grid size={12}>
                                 <Typography fontWeight={500}>
                                     Price
                                 </Typography>
                             </Grid>
-                            <Grid xs={6}>
+                            <Grid size={6}>
                                 <TextField {...register("minPrice", {valueAsNumber: true})}
                                            type={"number"}
                                            label="Min price"
@@ -267,7 +267,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                            size={size}
                                            fullWidth/>
                             </Grid>
-                            <Grid xs={6}>
+                            <Grid size={6}>
                                 <TextField {...register("maxPrice", {valueAsNumber: true})}
                                            type={"number"}
                                            label="Max price"
@@ -277,13 +277,13 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             </Grid>
                         </Grid>
 
-                        <Grid container xs={12} sm={6}>
-                            <Grid xs={12}>
+                        <Grid container size={{ xs: 12, sm: 6 }}>
+                            <Grid size={12}>
                                 <Typography fontWeight={500}>
                                     Floor size (Sqm)
                                 </Typography>
                             </Grid>
-                            <Grid xs={6}>
+                            <Grid size={6}>
                                 <TextField {...register("minAreaSize", {valueAsNumber: true})}
                                            type={"number"}
                                            label="Min floor size"
@@ -291,7 +291,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                            size={size}
                                            fullWidth/>
                             </Grid>
-                            <Grid xs={6}>
+                            <Grid size={6}>
                                 <TextField {...register("maxAreaSize", {valueAsNumber: true})}
                                            type={"number"}
                                            label="Max floor size"
@@ -301,7 +301,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             </Grid>
                         </Grid>
 
-                        <Grid xs={6} sm={6}>
+                        <Grid size={{ xs: 6, sm: 6 }}>
                             {isLoading ?
                                 <Skeleton variant="rounded" height={skeletonHeight}/> :
                                 <Controller
@@ -326,7 +326,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                 />
                             }
                         </Grid>
-                        <Grid xs={6} sm={6}>
+                        <Grid size={{ xs: 6, sm: 6 }}>
                             <Controller
                                 name="propertyTypeList"
                                 control={control}
@@ -336,21 +336,21 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={propertyTypeOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Property Type" placeholder="Property Type"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Property Type" placeholder="Property Type"/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
                                 )}
                             />
                         </Grid>
-                        <Grid xs={12}>
+                        <Grid size={12}>
                             <Typography fontWeight={500}>
                                 Other Criteria
                             </Typography>
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="availabilityList"
                                 control={control}
@@ -360,16 +360,16 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={availabilityOptions}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Status" placeholder="Status"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Status" placeholder="Status"/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
                                 )}
                             />
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <Controller
                                 name="updateAvailability"
                                 control={control}
@@ -378,27 +378,26 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         {...field}
                                         options={updateAvailabilityOptions}
                                         size={size}
-                                        renderInput={({inputProps, ...rest}) => (
-                                            <TextField {...rest} label="Update Status"
-                                                       placeholder="Update Status"
-                                                       inputProps={{...inputProps, readOnly}}/>
+                                        readOnly={readOnly}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Update Status" placeholder="Update Status"/>
                                         )}
                                         onChange={(e, data) => onChange(data)}
                                     />
                                 )}
                             />
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
                             <TextField {...register("tel")}
                                        label="Tel"
                                        variant="outlined"
                                        size={size}
                                        fullWidth/>
                         </Grid>
-                        <Grid xs={6} sm={3}>
+                        <Grid size={{ xs: 6, sm: 3 }}>
 
                         </Grid>
-                        <Grid xs={6} sm={3} md={2} className={"flex item-center"}>
+                        <Grid size={{ xs: 6, sm: 3, md: 2 }} className={"flex item-center"}>
                             <Controller
                                 name="petAllowed"
                                 control={control}
@@ -409,7 +408,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                 )}
                             />
                         </Grid>
-                        <Grid xs={6} sm={3} md={2} className={"flex item-center"}>
+                        <Grid size={{ xs: 6, sm: 3, md: 2 }} className={"flex item-center"}>
                             <Controller
                                 name="exclusive"
                                 control={control}
@@ -421,7 +420,7 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                             />
                         </Grid>
 
-                        <Grid xs={12}>
+                        <Grid size={12}>
                             <Stack spacing={2} direction="row" justifyContent={"end"}>
                                 <Button variant="outlined" onClick={resetHandler}>Reset</Button>
                                 <Button type={"submit"} variant="contained">Search</Button>
@@ -434,4 +433,3 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
 
     );
 };
-

@@ -15,6 +15,11 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState<boolean>(true);
     const [isPending, startTransition] = useTransition();
     const [timeOutRefreshToken, setTimeOutRefreshToken] = useState<number>();
+    const [isClient, setIsClient] = useState(false)
+
+    useEffect(() => {
+        setIsClient(true)
+    }, [])
 
     const getTriggerTime = (expirationTime: string) => {
         const timeDiff = dayjs(expirationTime).subtract(5, "minute").diff(dayjs());
@@ -51,6 +56,10 @@ export const AuthProviders = ({children}: { children: React.ReactNode }) => {
 
         return () => clearTimeout(refreshIdToken);
     }, [timeOutRefreshToken]);
+
+    if (!isClient) {
+        return null; // Prevent rendering on the server side
+    }
 
     if (loading || isPending) {
         return (

@@ -3,7 +3,7 @@ import {Property} from "@/types/listing";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import * as React from "react";
 import {Dispatch, SetStateAction, useState} from "react";
-import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import CloseIcon from '@mui/icons-material/Close';
 import {deleteListing} from "@/services/listingsApi";
 import {enqueueSnackbar} from "notistack";
 import {deleteOldCache} from "@/utils/propertyUtils";
@@ -20,7 +20,6 @@ export const DeleteDialog = ({property, open, setOpen}: PropertyFormDialog) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
-    const isDesktopScreen = useIsDesktopScreen();
 
     const handleClose = () => {
         setOpen(false);

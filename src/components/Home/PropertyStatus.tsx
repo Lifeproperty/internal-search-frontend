@@ -1,6 +1,5 @@
-import {Autocomplete, Stack, TextField} from "@mui/material";
+import {Autocomplete, Stack, TextField, Grid} from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/system/Unstable_Grid";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";
@@ -76,7 +75,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
         <Grid component="form" className={"max-w-[calc(100vw-48px)] md:max-w-[600px]"}
               onSubmit={handleSubmit(onSubmit)}
               container spacing={2}>
-            <Grid xs={12}>
+            <Grid size={12}>
                 <Controller
                     name="availability"
                     control={control}
@@ -93,12 +92,12 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                     )}
                 />
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
                 <Typography>
                     Update Status: {updateAvailabilityText}
                 </Typography>
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
                 <Controller
                     name="comment"
                     control={control}
@@ -112,7 +111,7 @@ export const PropertyStatus = ({property}: PropertyCommentProps) => {
                                    fullWidth/>
                     )}/>
             </Grid>
-            <Grid xs={12}>
+            <Grid size={12}>
                 <Stack spacing={2} direction="row" justifyContent={"end"}>
                     <Button disabled={isLoading} variant="outlined" onClick={resetHandler}>Reset</Button>
                     <LoadingButton loading={isLoading} type={"submit"} variant="contained">Save</LoadingButton>

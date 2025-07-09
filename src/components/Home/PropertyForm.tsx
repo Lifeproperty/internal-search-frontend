@@ -1,9 +1,8 @@
 import {Property} from "@/types/listing";
-import {Autocomplete, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {Autocomplete, Checkbox, FormControlLabel, TextField, Grid} from "@mui/material";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {Control, Controller, UseFormRegister} from "react-hook-form";
 import * as React from "react";
-import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import {usePropertyOptions} from "@/hooks/usePropertyOptions";
 import useGetAllListings from "@/hooks/useGetAllListings";
@@ -30,7 +29,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
 
     return (
         <Grid container spacing={2}>
-            <Grid xs={12}>
+            <Grid size={12}>
                 <Controller
                     name="titleEN"
                     control={control}
@@ -54,7 +53,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                     )}
                 />
             </Grid>
-            <Grid xs={6}>
+            <Grid size={6}>
                 <Controller
                     name="postFrom"
                     control={control}
@@ -63,16 +62,20 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                             {...field}
                             size={size}
                             options={postFromTypeOptions}
-                            renderInput={({inputProps, ...rest}) => (
-                                <TextField {...rest} label="Post From" placeholder="Post From"
-                                           inputProps={{...inputProps, readOnly}}/>
+                            readOnly={readOnly}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Post From"
+                                    placeholder="Post From"
+                                />
                             )}
                             onChange={(e, data) => onChange(data)}
                         />
                     )}
                 />
             </Grid>
-            <Grid xs={6}>
+            <Grid size={6}>
                 <Controller
                     name="propertyType"
                     control={control}
@@ -81,9 +84,13 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                             {...field}
                             size={size}
                             options={propertyTypeOptions}
-                            renderInput={({inputProps, ...rest}) => (
-                                <TextField {...rest} label="Property Type" placeholder="Property Type"
-                                           inputProps={{...inputProps, readOnly}}/>
+                            readOnly={readOnly}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Property Type"
+                                    placeholder="Property Type"
+                                />
                             )}
                             onChange={(e, data) => onChange(data)}
                         />
@@ -91,7 +98,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                 />
 
             </Grid>
-            <Grid xs={6}>
+            <Grid size={6}>
                 <TextField {...register("bedroom", {valueAsNumber: true})}
                            type={"number"}
                            label="Bedroom"
@@ -99,7 +106,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                            size={size}
                            fullWidth/>
             </Grid>
-            <Grid xs={6}>
+            <Grid size={6}>
                 <TextField {...register("bathroom", {valueAsNumber: true})}
                            type={"number"}
                            label="Bathroom"
@@ -107,22 +114,22 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                            size={size}
                            fullWidth/>
             </Grid>
-            <Grid container xs={12}>
-                <Grid xs={6}>
+            <Grid container size={12}>
+                <Grid size={6}>
                     <TextField {...register("unitNumber")}
                                label="Unit Number"
                                variant="outlined"
                                size={size}
                                fullWidth/>
                 </Grid>
-                <Grid xs={6}>
+                <Grid size={6}>
                     <TextField {...register("floor")}
                                label="Floor"
                                variant="outlined"
                                size={size}
                                fullWidth/>
                 </Grid>
-                <Grid xs={6}>
+                <Grid size={6}>
                     <TextField {...register("price", {valueAsNumber: true})}
                                type={"number"}
                                label="Price"
@@ -131,7 +138,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                                fullWidth/>
 
                 </Grid>
-                <Grid xs={6}>
+                <Grid size={6}>
                     <TextField {...register("areaSize", {valueAsNumber: true})}
                                label="Area Size"
                                variant="outlined"
@@ -140,7 +147,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
 
                 </Grid>
 
-                <Grid xs={6} className={"flex item-center"}>
+                <Grid size={6} className={"flex item-center"}>
                     <Controller
                         name="petAllowed"
                         control={control}
@@ -151,7 +158,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                         )}
                     />
                 </Grid>
-                <Grid xs={6} className={"flex item-center"}>
+                <Grid size={6} className={"flex item-center"}>
                     <Controller
                         name="exclusive"
                         control={control}
@@ -162,7 +169,7 @@ export const PropertyForm = ({control, property, register}: PropertyFormProps) =
                         )}
                     />
                 </Grid>
-                <Grid xs={12}>
+                <Grid size={12}>
                     <Typography>
                         Last Updated: {updateAvailabilityText}
                     </Typography>

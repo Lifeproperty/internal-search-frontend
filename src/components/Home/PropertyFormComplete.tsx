@@ -1,10 +1,9 @@
 import {Property} from "@/types/listing";
 import {AvailabilityType} from "@/types/availability";
-import {Autocomplete, Checkbox, FormControlLabel, TextField} from "@mui/material";
+import {Autocomplete, Checkbox, FormControlLabel, TextField, Grid} from "@mui/material";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import {Control, Controller, UseFormRegister} from "react-hook-form";
 import * as React from "react";
-import Grid from "@mui/system/Unstable_Grid";
 import {getVirtualizedAutocompleteConfig} from "@/utils/autocompleteVirtualizationUtils";
 import {usePropertyOptions} from "@/hooks/usePropertyOptions";
 import useGetAllListings from "@/hooks/useGetAllListings";
@@ -35,7 +34,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
     return (
         <Grid container spacing={2}>
             {/* Area LP */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="areaLP"
                     control={control}
@@ -56,7 +55,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Area LV */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="areaLV"
                     control={control}
@@ -87,12 +86,12 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* SKU */}
-            <Grid xs={12}>
+            <Grid size={12}>
                 <SkuInput control={control} size={size} required={true}/>
             </Grid>
 
             {/* Property Type */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="propertyType"
                     control={control}
@@ -111,7 +110,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Post Type */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="postType"
                     control={control}
@@ -130,7 +129,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Post From */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="postFrom"
                     control={control}
@@ -149,7 +148,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Title EN */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="titleEN"
                     control={control}
@@ -175,7 +174,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Price */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("price", {valueAsNumber: true})}
                            type="number"
                            label="Price"
@@ -185,7 +184,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Area Size */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("areaSize", {valueAsNumber: true})}
                            type="number"
                            label="Area Size"
@@ -195,7 +194,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Floor */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("floor")}
                            label="Floor"
                            variant="outlined"
@@ -204,7 +203,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Bedroom */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("bedroom")}
                            label="Bedroom"
                            variant="outlined"
@@ -213,7 +212,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Bathroom */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("bathroom")}
                            label="Bathroom"
                            variant="outlined"
@@ -222,7 +221,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Facing Direction */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("facingDirection")}
                            label="Facing Direction"
                            variant="outlined"
@@ -231,7 +230,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Unit Number */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("unitNumber")}
                            label="Unit Number"
                            variant="outlined"
@@ -240,7 +239,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Building Year */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("buildingYear", {valueAsNumber: true})}
                            type="number"
                            label="Building Year"
@@ -250,7 +249,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Email */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("email")}
                            type="email"
                            label="Email"
@@ -260,7 +259,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Line ID */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("lineId")}
                            label="Line ID"
                            variant="outlined"
@@ -269,7 +268,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Tel */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("tel")}
                            label="Tel."
                            variant="outlined"
@@ -278,7 +277,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Name */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("name")}
                            label="Name"
                            variant="outlined"
@@ -287,7 +286,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Whatsapp */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("whatsapp")}
                            label="Whatsapp"
                            variant="outlined"
@@ -296,7 +295,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Facebook Messenger */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("facebookMessenger")}
                            label="Facebook Messenger"
                            variant="outlined"
@@ -305,7 +304,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Wechat */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("wechat")}
                            label="Wechat"
                            variant="outlined"
@@ -314,7 +313,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* External Data Source */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("externalDataSource")}
                            label="External Data Source"
                            variant="outlined"
@@ -323,7 +322,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Feedback Checked */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("feedbackChecked")}
                            label="Feedback Checked"
                            variant="outlined"
@@ -332,7 +331,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Listed On */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <TextField {...register("listedOn")}
                            type="date"
                            label="Listed On"
@@ -345,7 +344,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Availability */}
-            <Grid xs={12} sm={6}>
+            <Grid size={{ xs: 12, sm: 6 }}>
                 <Controller
                     name="availability"
                     control={control}
@@ -364,7 +363,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Comment */}
-            <Grid xs={12}>
+            <Grid size={12}>
                 <TextField {...register("comment")}
                            label="Comment"
                            variant="outlined"
@@ -375,7 +374,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Pet Allowed */}
-            <Grid xs={12} sm={6} className="flex items-center">
+            <Grid size={{ xs: 12, sm: 6 }} className="flex items-center">
                 <Controller
                     name="petAllowed"
                     control={control}
@@ -395,7 +394,7 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
             </Grid>
 
             {/* Exclusive */}
-            <Grid xs={12} sm={6} className="flex items-center">
+            <Grid size={{ xs: 12, sm: 6 }} className="flex items-center">
                 <Controller
                     name="exclusive"
                     control={control}

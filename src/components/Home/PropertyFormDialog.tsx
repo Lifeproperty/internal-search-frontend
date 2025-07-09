@@ -3,7 +3,7 @@ import {Property} from "@/types/listing";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import * as React from "react";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
-import {CloseIcon} from "next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon";
+import CloseIcon from '@mui/icons-material/Close';
 import {useForm} from "react-hook-form";
 import {PropertyForm} from "./PropertyForm";
 import {updateListing} from "@/services/listingsApi";
@@ -63,31 +63,29 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
             open={open}
             onClose={handleClose}
             aria-labelledby="responsive-dialog-title"
-            PaperProps={{
-                component: "form",
-                onSubmit: handleSubmit(onSubmit),
-            }}
         >
-            <div className={"flex flex-row justify-between items-center"}>
-                <DialogTitle id="responsive-dialog-title">
-                    Edit Property - {property?.sku}/{property?.postType}
-                </DialogTitle>
-                <div className={"pr-2"}>
-                    <IconButton aria-label="close" onClick={handleClose}>
-                        <CloseIcon/>
-                    </IconButton>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className={"flex flex-row justify-between items-center"}>
+                    <DialogTitle id="responsive-dialog-title">
+                        Edit Property - {property?.sku}/{property?.postType}
+                    </DialogTitle>
+                    <div className={"pr-2"}>
+                        <IconButton aria-label="close" onClick={handleClose}>
+                            <CloseIcon/>
+                        </IconButton>
+                    </div>
                 </div>
-            </div>
 
-            <DialogContent dividers>
-                <PropertyForm property={property} control={control} register={register}/>
-            </DialogContent>
-            <DialogActions>
-                <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>
-                <LoadingButton loading={isLoading} type={"submit"} variant="contained">
-                    Update
-                </LoadingButton>
-            </DialogActions>
+                <DialogContent dividers>
+                    <PropertyForm property={property} control={control} register={register}/>
+                </DialogContent>
+                <DialogActions>
+                    <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>
+                    <LoadingButton loading={isLoading} type={"submit"} variant="contained">
+                        Update
+                    </LoadingButton>
+                </DialogActions>
+            </form>
         </Dialog>
     );
 };

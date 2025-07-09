@@ -82,10 +82,6 @@ export const SkuInput = ({ control, size = 'medium', required = false }: SkuInpu
                                     {...params}
                                     label="Code"
                                     placeholder="AR, BR, etc."
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        style: { textTransform: 'uppercase' }
-                                    }}
                                 />
                             )}
                             onChange={(e, newValue) => handleCodeChange(newValue, onChange)}
@@ -101,7 +97,11 @@ export const SkuInput = ({ control, size = 'medium', required = false }: SkuInpu
                             label="Number"
                             type="number"
                             sx={{ flex: 1 }}
-                            InputProps={{ readOnly: true }}
+                            slotProps={{
+                                input: {
+                                    readOnly: true
+                                }
+                            }}
                         />
                     </Box>
                     <TextField
@@ -112,7 +112,11 @@ export const SkuInput = ({ control, size = 'medium', required = false }: SkuInpu
                         variant="outlined"
                         required={required}
                         sx={{ flex: 1 }}
-                        InputProps={{ readOnly: true }}
+                        slotProps={{
+                            input: {
+                                readOnly: true
+                            }
+                        }}
                         placeholder="Generated SKU"
                     />
                 </Box>
