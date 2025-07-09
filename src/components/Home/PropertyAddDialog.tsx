@@ -44,7 +44,6 @@ const defaultProperty: Partial<Property> = {
     facebookMessenger: "",
     wechat: "",
     externalDataSource: "",
-    feedbackChecked: "",
     listedOn: "",
     availability: AvailabilityType.Available,
     comment: "",

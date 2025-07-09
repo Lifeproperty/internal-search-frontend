@@ -28,7 +28,6 @@ export interface Property {
     facebookMessenger: string;
     wechat: string;
     externalDataSource: string;
-    feedbackChecked: string;
     listedOn: string;
     availability: AvailabilityType;
     psCode: number;

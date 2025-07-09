@@ -91,7 +91,6 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             {accessorKey: "facebookMessenger", header: "Facebook Messenger", size: 150},
             {accessorKey: "wechat", header: "Wechat", size: 150},
             {accessorKey: "externalDataSource", header: "External Data Source", size: 150},
-            {accessorKey: "feedbackChecked", header: "Feedback Checked", size: 150},
             {accessorKey: "listedOn", header: "Listed On", size: 150},
             {accessorKey: "availability", header: "Status", size: 150},
             {accessorKey: "psCode", header: "PS Code", size: 150},
@@ -101,7 +100,8 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 enableColumnActions: false,
                 minSize: 310,
                 Cell: ({row}) => (
-                    <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler} onClickDelete={openDeleteDialogHandler}/>
+                    <DetailsMobile property={row.original} onClickEdit={openEditDialogHandler}
+                                   onClickDelete={openDeleteDialogHandler}/>
                 ),
             }
         ], [isDesktopScreen],
@@ -123,7 +123,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
         renderTopToolbarCustomActions: () => (
             <Button
                 variant="contained"
-                startIcon={<AddIcon />}
+                startIcon={<AddIcon/>}
                 onClick={() => setOpenAddDialog(true)}
                 disabled={isLoading}
             >
