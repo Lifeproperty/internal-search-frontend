@@ -33,7 +33,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
     const isDesktopScreen = useIsDesktopScreen();
     const size = isDesktopScreen ? "medium" : "small";
     const skeletonHeight = size === "medium" ? 56 : 40;
-    const readOnly = !isDesktopScreen;
     const {control, register, handleSubmit, reset} = useForm<SearchFormType>({
         defaultValues: {
             areaLPList: [],
@@ -183,7 +182,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={postTypeOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Post Type" placeholder="Post Type"/>
                                         )}
@@ -202,7 +200,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={postFromTypeOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Post From" placeholder="Post From"/>
                                         )}
@@ -222,7 +219,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={bedRoomOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Bedroom" placeholder="Bedroom"/>
                                         )}
@@ -242,7 +238,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={bathroomOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Bathroom" placeholder="Bathroom"/>
                                         )}
@@ -336,7 +331,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={propertyTypeOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Property Type" placeholder="Property Type"/>
                                         )}
@@ -360,7 +354,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         multiple
                                         size={size}
                                         options={availabilityOptions}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Status" placeholder="Status"/>
                                         )}
@@ -378,7 +371,6 @@ export const SearchForm = ({properties, onSearch, isLoading}: SearchFormProps) =
                                         {...field}
                                         options={updateAvailabilityOptions}
                                         size={size}
-                                        readOnly={readOnly}
                                         renderInput={(params) => (
                                             <TextField {...params} label="Update Status" placeholder="Update Status"/>
                                         )}

@@ -35,6 +35,15 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
     // Create availability options from AvailabilityType enum
     const availabilityOptions = Object.values(AvailabilityType);
 
+    // Create bedroom options with Studio and 1-10
+    const bedroomOptions = ['Studio', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+    // Create bathroom options with 1-10
+    const bathroomOptions = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+
+    // Create facing direction options with 8 directions
+    const facingDirectionOptions = ['North', 'Northeast', 'East', 'Southeast', 'South', 'Southwest', 'West', 'Northwest'];
+
     return (
         <Grid container spacing={3}>
             {/* PROPERTY INFORMATION SECTION */}
@@ -216,29 +225,59 @@ export const PropertyFormComplete = ({control, register}: PropertyFormCompletePr
 
             {/* Bedroom */}
             <Grid size={{xs: 12, sm: 6}}>
-                <TextField {...register("bedroom")}
-                           label="Bedroom"
-                           variant="outlined"
-                           size={size}
-                           fullWidth/>
+                <Controller
+                    name="bedroom"
+                    control={control}
+                    render={({field: {onChange, ...field}}) => (
+                        <Autocomplete
+                            {...field}
+                            size={size}
+                            options={bedroomOptions}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Bedroom" placeholder="Select Bedroom"/>
+                            )}
+                            onChange={(e, data) => onChange(data)}
+                        />
+                    )}
+                />
             </Grid>
 
             {/* Bathroom */}
             <Grid size={{xs: 12, sm: 6}}>
-                <TextField {...register("bathroom")}
-                           label="Bathroom"
-                           variant="outlined"
-                           size={size}
-                           fullWidth/>
+                <Controller
+                    name="bathroom"
+                    control={control}
+                    render={({field: {onChange, ...field}}) => (
+                        <Autocomplete
+                            {...field}
+                            size={size}
+                            options={bathroomOptions}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Bathroom" placeholder="Select Bathroom"/>
+                            )}
+                            onChange={(e, data) => onChange(data)}
+                        />
+                    )}
+                />
             </Grid>
 
             {/* Facing Direction */}
             <Grid size={{xs: 12, sm: 6}}>
-                <TextField {...register("facingDirection")}
-                           label="Facing Direction"
-                           variant="outlined"
-                           size={size}
-                           fullWidth/>
+                <Controller
+                    name="facingDirection"
+                    control={control}
+                    render={({field: {onChange, ...field}}) => (
+                        <Autocomplete
+                            {...field}
+                            size={size}
+                            options={facingDirectionOptions}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Facing Direction" placeholder="Select Facing Direction"/>
+                            )}
+                            onChange={(e, data) => onChange(data)}
+                        />
+                    )}
+                />
             </Grid>
 
             {/* Unit Number */}
