@@ -15,7 +15,7 @@ interface PropertyFormProps {
     property: Property;
 }
 
-export const PropertyForm = ({control, property, register}: PropertyFormProps) => {
+export const PropertyEditForm = ({control, property, register}: PropertyFormProps) => {
     const isDesktopScreen = useIsDesktopScreen();
     const {data} = useGetAllListings();
     const size = isDesktopScreen ? "medium" : "small";

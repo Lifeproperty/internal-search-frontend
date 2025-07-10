@@ -1,8 +1,8 @@
 "use client";
-import {ListingTable} from "@/components/Home/ListingTable";
+import {ListingTable} from "@/components/Home/ListingTable/ListingTable";
 import {Container} from "@mui/material";
 import useGetAllListings from "@/hooks/useGetAllListings";
-import {SearchForm} from "@/components/Home/SearchForm";
+import {SearchForm} from "@/components/Home/Search/SearchForm";
 import {SearchFormType} from "@/types/searchForm";
 import {useEffect, useState} from "react";
 import {Property} from "@/types/listing";

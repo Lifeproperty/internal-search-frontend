@@ -3,7 +3,7 @@ import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
 import useGetImagesFromSku from "@/hooks/useGetImagesFromSku";
 import {Dialog, DialogTitle, Skeleton} from "@mui/material";
 import {useState} from "react";
-import {AllImagesList} from "@/components/Home/AllImagesList";
+import {AllImagesList} from "@/components/Home/ListingTable/AllImagesList";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import Typography from "@mui/material/Typography";
 

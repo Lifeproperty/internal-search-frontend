@@ -1,6 +1,5 @@
 import {Button, Dialog, DialogActions, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import {Property} from "@/types/listing";
-import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
 import * as React from "react";
 import {Dispatch, SetStateAction, useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,13 +9,13 @@ import {deleteOldCache} from "@/utils/propertyUtils";
 import {useQueryClient} from "@tanstack/react-query";
 import {LoadingButton} from "@mui/lab";
 
-interface PropertyFormDialog {
+interface PropertyDeleteDialogProps {
     property: Property;
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const DeleteDialog = ({property, open, setOpen}: PropertyFormDialog) => {
+export const PropertyDeleteDialog = ({property, open, setOpen}: PropertyDeleteDialogProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const queryClient = useQueryClient();

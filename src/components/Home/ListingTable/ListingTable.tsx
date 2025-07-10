@@ -1,20 +1,20 @@
 "use client";
 import {Property} from "@/types/listing";
-import {ListingImage} from "@/components/Home/ListingImage";
+import {ListingImage} from "@/components/Home/ListingTable/ListingImage";
 import {MaterialReactTable, MRT_ColumnDef, MRT_ExpandedState, useMaterialReactTable} from "material-react-table";
 import {useMemo, useState} from "react";
-import {ListingDetail} from "@/components/Home/ListingDetail";
-import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
+import {ListingDetail} from "@/components/Home/ListingDetail/ListingDetail";
+import {AvailabilityDot} from "@/components/Home/ListingTable/AvailabilityDot";
 import {useSnackbar} from "notistack";
-import {DetailsMobile} from "@/components/Home/DetailsMobile";
+import {DetailsMobile} from "@/components/Home/ListingTable/DetailsMobile";
 import useIsDesktopScreen from "@/hooks/useIsDesktopScreen";
-import {PropertyFormDialog} from "@/components/Home/PropertyFormDialog";
-import {PropertyAddDialog} from "@/components/Home/PropertyAddDialog";
+import {PropertyEditDialog} from "@/components/Home/PropertyEditDialog/PropertyEditDialog";
+import {PropertyAddDialog} from "@/components/Home/PropertyAddDialog/PropertyAddDialog";
 import {ListItemIcon, MenuItem, Button} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
-import {DeleteDialog} from "@/components/Home/DeleteDialog";
+import {PropertyDeleteDialog} from "@/components/Home/PropertyDeleteDialog/PropertyDeleteDialog";
 
 interface ListingTableProps {
     rows: Property[];
@@ -187,8 +187,8 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
             <MaterialReactTable table={table}/>
             <PropertyAddDialog open={openAddDialog} setOpen={setOpenAddDialog}/>
             {selectedProperty && <>
-                <PropertyFormDialog property={selectedProperty} open={openEditDialog} setOpen={setOpenEditDialog}/>
-                <DeleteDialog property={selectedProperty} open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
+                <PropertyEditDialog property={selectedProperty} open={openEditDialog} setOpen={setOpenEditDialog}/>
+                <PropertyDeleteDialog property={selectedProperty} open={openDeleteDialog} setOpen={setOpenDeleteDialog}/>
             </>
             }
         </>

@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import {Link} from "@mui/material";
-import {ContactCopyOrLink} from "@/components/Home/ContactCopyOrLink";
+import {ContactCopyOrLink} from "@/components/Home/ListingDetail/ContactCopyOrLink";
 import {Property} from "@/types/listing";
 
 interface PropertyContactProps {

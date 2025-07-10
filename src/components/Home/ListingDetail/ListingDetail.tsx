@@ -2,9 +2,9 @@ import {Property} from "@/types/listing";
 import {Box, Tab} from "@mui/material";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {SyntheticEvent, useState} from "react";
-import PropertyContact from "@/components/Home/PropertyContact";
-import {PropertyDescription} from "@/components/Home/PropertyDescription";
-import {PropertyStatus} from "@/components/Home/PropertyStatus";
+import PropertyContact from "@/components/Home/ListingDetail/PropertyContact";
+import {PropertyDescription} from "@/components/Home/ListingDetail/PropertyDescription";
+import {PropertyStatus} from "@/components/Home/ListingDetail/PropertyStatus";
 
 interface ListingDetailProps {
     property: Property;

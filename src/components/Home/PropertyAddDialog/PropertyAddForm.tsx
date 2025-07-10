@@ -13,13 +13,13 @@ import useGetAllListings from "@/hooks/useGetAllListings";
 import {SkuInput} from "./SkuInput";
 import dayjs from "dayjs";
 
-interface PropertyFormCompleteProps {
+interface PropertyAddFormProps {
     register: UseFormRegister<Property>;
     control: Control<Property, Property>;
     property: Property;
 }
 
-export const PropertyFormComplete = ({control, register}: PropertyFormCompleteProps) => {
+export const PropertyAddForm = ({control, register}: PropertyAddFormProps) => {
     const isDesktopScreen = useIsDesktopScreen();
     const {data} = useGetAllListings();
     const size = isDesktopScreen ? "medium" : "small";

@@ -1,5 +1,5 @@
-import {ListingImage} from "@/components/Home/ListingImage";
-import {AvailabilityDot} from "@/components/Home/AvailabilityDot";
+import {ListingImage} from "@/components/Home/ListingTable/ListingImage";
+import {AvailabilityDot} from "@/components/Home/ListingTable/AvailabilityDot";
 import Typography from "@mui/material/Typography";
 import {Property} from "@/types/listing";
 import { IconButton } from "@mui/material";

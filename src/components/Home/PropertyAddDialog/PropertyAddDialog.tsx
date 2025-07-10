@@ -5,7 +5,7 @@ import * as React from "react";
 import {Dispatch, SetStateAction, useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import {useForm} from "react-hook-form";
-import {PropertyFormComplete} from "./PropertyFormComplete";
+import {PropertyAddForm} from "./PropertyAddForm";
 import {createListing} from "@/services/listingsApi";
 import {enqueueSnackbar} from "notistack";
 import {useQueryClient} from "@tanstack/react-query";
@@ -109,7 +109,7 @@ export const PropertyAddDialog = ({open, setOpen}: PropertyAddDialogProps) => {
                 </div>
 
                 <DialogContent dividers>
-                    <PropertyFormComplete property={defaultProperty as Property} control={control} register={register}/>
+                    <PropertyAddForm property={defaultProperty as Property} control={control} register={register}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>

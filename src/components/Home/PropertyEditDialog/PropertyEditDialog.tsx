@@ -5,20 +5,20 @@ import * as React from "react";
 import {Dispatch, SetStateAction, useEffect, useState} from "react";
 import CloseIcon from '@mui/icons-material/Close';
 import {useForm} from "react-hook-form";
-import {PropertyForm} from "./PropertyForm";
+import {PropertyEditForm} from "./PropertyEditForm";
 import {updateListing} from "@/services/listingsApi";
 import {enqueueSnackbar} from "notistack";
 import {updateOldCache} from "@/utils/propertyUtils";
 import {useQueryClient} from "@tanstack/react-query";
 import {LoadingButton} from "@mui/lab";
 
-interface PropertyFormDialog {
+interface PropertyEditDialogProps {
     property: Property;
     open: boolean;
     setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog) => {
+export const PropertyEditDialog = ({property, open, setOpen}: PropertyEditDialogProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const queryClient = useQueryClient();
@@ -77,7 +77,7 @@ export const PropertyFormDialog = ({property, open, setOpen}: PropertyFormDialog
                 </div>
 
                 <DialogContent dividers>
-                    <PropertyForm property={property} control={control} register={register}/>
+                    <PropertyEditForm property={property} control={control} register={register}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>
