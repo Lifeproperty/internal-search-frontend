@@ -462,7 +462,7 @@ export const PropertyAddForm = ({control, register}: PropertyAddFormProps) => {
             </Grid>
 
             {/* Pet Allowed */}
-            <Grid size={{xs: 12, sm: 6}} className="flex items-center">
+            <Grid size={{xs: 6}} className="flex items-center">
                 <Controller
                     name="petAllowed"
                     control={control}
@@ -482,7 +482,7 @@ export const PropertyAddForm = ({control, register}: PropertyAddFormProps) => {
             </Grid>
 
             {/* Exclusive */}
-            <Grid size={{xs: 12, sm: 6}} className="flex items-center">
+            <Grid size={{xs: 6}} className="flex items-center">
                 <Controller
                     name="exclusive"
                     control={control}
