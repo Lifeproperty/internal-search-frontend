@@ -8,7 +8,6 @@ export interface Property {
     propertyType: PropertyType;
     postType: PostType;
     postFrom: PostFromType;
-    titleTH: string;
     titleEN: string;
     price: number;
     areaSize: number;
@@ -30,9 +29,9 @@ export interface Property {
     externalDataSource: string;
     listedOn: string;
     availability: AvailabilityType;
-    psCode: number;
+    psCode?: number;
     comment: string;
-    updateAvailability: string;
+    updateAvailability?: string;
 }
 
 export interface ListingTable {

@@ -1,6 +1,6 @@
 import {Property} from "@/types/listing";
 import {AvailabilityType} from "@/types/availability";
-import {Autocomplete, Checkbox, FormControlLabel, TextField, Grid, Typography, Divider, Box} from "@mui/material";
+import {Autocomplete, Checkbox, FormControlLabel, TextField, Grid, Typography} from "@mui/material";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import {LocalizationProvider} from "@mui/x-date-pickers/LocalizationProvider";
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";

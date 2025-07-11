@@ -18,7 +18,7 @@ interface PropertyAddDialogProps {
     setOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-const defaultProperty: Partial<Property> = {
+const defaultProperty: Property = {
     areaLP: "",
     areaLV: "",
     sku: "",
@@ -44,7 +44,7 @@ const defaultProperty: Partial<Property> = {
     facebookMessenger: "",
     wechat: "",
     externalDataSource: "",
-    listedOn: "",
+    listedOn: new Date().toISOString(),
     availability: AvailabilityType.Available,
     comment: "",
 };
@@ -54,7 +54,7 @@ export const PropertyAddDialog = ({open, setOpen}: PropertyAddDialogProps) => {
 
     const queryClient = useQueryClient();
     const {control, handleSubmit, register, reset} = useForm<Property>({
-        defaultValues: defaultProperty as Property
+        defaultValues: defaultProperty
     });
     const isDesktopScreen = useIsDesktopScreen();
 
@@ -109,7 +109,7 @@ export const PropertyAddDialog = ({open, setOpen}: PropertyAddDialogProps) => {
                 </div>
 
                 <DialogContent dividers>
-                    <PropertyAddForm property={defaultProperty as Property} control={control} register={register}/>
+                    <PropertyAddForm property={defaultProperty} control={control} register={register}/>
                 </DialogContent>
                 <DialogActions>
                     <Button disabled={isLoading} onClick={clickResetHandler} variant="outlined">Reset</Button>
