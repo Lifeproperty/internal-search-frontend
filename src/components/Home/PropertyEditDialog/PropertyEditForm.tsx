@@ -24,7 +24,6 @@ export const PropertyEditForm = ({control, property, register}: PropertyFormProp
         propertyTypeOptions,
         postFromTypeOptions,
     } = usePropertyOptions(data || []);
-    const readOnly = !isDesktopScreen;
     const updateAvailabilityText = property.updateAvailability ? dayjs(property.updateAvailability)?.format("DD/MM/YYYY HH:mm:ss") : "-";
 
     return (
@@ -62,13 +61,8 @@ export const PropertyEditForm = ({control, property, register}: PropertyFormProp
                             {...field}
                             size={size}
                             options={postFromTypeOptions}
-                            readOnly={readOnly}
                             renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Post From"
-                                    placeholder="Post From"
-                                />
+                                <TextField {...params} label="Post From" placeholder="Post From"/>
                             )}
                             onChange={(e, data) => onChange(data)}
                         />
@@ -84,13 +78,8 @@ export const PropertyEditForm = ({control, property, register}: PropertyFormProp
                             {...field}
                             size={size}
                             options={propertyTypeOptions}
-                            readOnly={readOnly}
                             renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Property Type"
-                                    placeholder="Property Type"
-                                />
+                                <TextField {...params} label="Property Type" placeholder="Property Type"/>
                             )}
                             onChange={(e, data) => onChange(data)}
                         />

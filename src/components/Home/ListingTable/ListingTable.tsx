@@ -166,7 +166,7 @@ export const ListingTable = ({rows, isLoading}: ListingTableProps) => {
                 </ListItemIcon>
                 Edit
             </MenuItem>,
-            <MenuItem key={0}
+            <MenuItem key={1}
                       onClick={() => {
                           openDeleteDialogHandler(row.original);
                           closeMenu();
